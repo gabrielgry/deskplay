@@ -146,22 +146,14 @@
           ansible.builtin.debug:
             msg: 'Adding 1Password account {{ onepassword_login_test }}'
           vars:
-            onepassword_login_test: lookup('community.general.onepassword',
-                 'PC User',
-                 field='username',
-                 subdomain='{{ onepassword_subdomain }}',
-                 master_password='{{ onepassword_master_password }}',
-                 username='{{ onepassword_email }}',
-                 secret_key='{{ onepassword_secret_key }}')
+            onepassword_login_test: "{{ lookup('community.general.onepassword', 'PC User', field='username', subdomain=onepassword_subdomain, master_password=onepassword_master_password, username=onepassword_email, secret_key=onepassword_secret_key) }}"
 
     - name: Login 1Password account
+      when: onepassword_account_list.stdout != ""
       ansible.builtin.debug:
         msg: 'Login 1Password account {{ onepassword_login_test }}'
       vars:
-        onepassword_login_test: lookup('community.general.onepassword',
-                                'PC User',
-                                field='username',
-                                master_password='{{ onepassword_master_password }}')
+        onepassword_login_test: "{{ lookup('community.general.onepassword', 'PC User', field='username', master_password=onepassword_master_password) }}"
 
     - name: Create user
       ansible.builtin.user:
