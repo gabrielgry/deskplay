@@ -127,7 +127,7 @@
     - name: Get 1Password credentials
       when: onepassword_account_list.stdout == ""
       block:
-        - name: Get 1Password domain
+        - name: Get 1Password Subdomain
           ansible.builtin.pause:
             prompt: Enter 1Password subdomain
           register: onepassword_subdomain
@@ -143,21 +143,22 @@
           register: onepassword_secret_key
 
         - name: Add 1Password account
-          ansible.builtin.debug:
-            var: lookup('community.general.onepassword',
-                'PC User',
-                field='username',
-                subdomain='{{ onepassword_subdomain }}',
-                master_password='{{ onepassword_master_password }}',
-                username='{{ onepassword_email }}',
-                secret_key='{{ onepassword_secret_key }}')
+          vars:
+            onepassword_login_test: lookup('community.general.onepassword',
+                 'PC User',
+                 field='username',
+                 subdomain='{{ onepassword_subdomain }}',
+                 master_password='{{ onepassword_master_password }}',
+                 username='{{ onepassword_email }}',
+                 secret_key='{{ onepassword_secret_key }}')
 
     - name: Login 1Password account
-      ansible.builtin.debug:
-        var: lookup('community.general.onepassword',
-            'PC User',
-            field='username',
-            master_password='{{ onepassword_master_password }}')
+      when: onepassword_account_list.stdout != ""
+      vars:
+        onepassword_login_test: lookup('community.general.onepassword',
+                                'PC User',
+                                field='username',
+                                master_password='{{ onepassword_master_password }}')
 
     - name: Create user
       ansible.builtin.user:
