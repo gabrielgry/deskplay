@@ -143,6 +143,8 @@
           register: onepassword_secret_key
 
         - name: Add 1Password account
+          ansible.builtin.debug:
+            msg: Adding 1Password account
           vars:
             onepassword_login_test: lookup('community.general.onepassword',
                  'PC User',
@@ -154,6 +156,8 @@
 
     - name: Login 1Password account
       when: onepassword_account_list.stdout != ""
+      ansible.builtin.debug:
+        msg: Login 1Password account
       vars:
         onepassword_login_test: lookup('community.general.onepassword',
                                 'PC User',
