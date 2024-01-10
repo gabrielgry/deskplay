@@ -7,7 +7,7 @@
   vars_prompt:
     - name: onepassword_master_password
       prompt: Enter 1Password master password
-      private: true
+      private: false
 
   tasks:
     - name: Get Systemd default target
@@ -143,17 +143,17 @@
           register: onepassword_secret_key
 
         - name: Add 1Password account
+          no_log: true
           ansible.builtin.debug:
-            msg: 'Adding 1Password account {{ onepassword_login_test }}'
+            msg: 'Adding 1Password account'
           vars:
-            onepassword_login_test: "{{ lookup('community.general.onepassword', 'PC User', field='username', subdomain=onepassword_subdomain.user_input, master_password=onepassword_master_password, username=onepassword_email.user_input, secret_key=onepassword_secret_key.user_input) }}"
-
-    - name: Login 1Password account
-      when: onepassword_account_list.stdout != ""
-      ansible.builtin.debug:
-        msg: 'Login 1Password account {{ onepassword_login_test }}'
-      vars:
-        onepassword_login_test: "{{ lookup('community.general.onepassword', 'PC User', field='username', master_password=onepassword_master_password) }}"
+            onepassword_login_test: "{{ lookup('community.general.onepassword',
+                                        'PC User',
+                                        field='username',
+                                        subdomain=onepassword_subdomain.user_input,
+                                        master_password=onepassword_master_password,
+                                        username=onepassword_email.user_input,
+                                        secret_key=onepassword_secret_key.user_input) }}"
 
     - name: Create user
       ansible.builtin.user:
