@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "sshAgent.sshAuthorizatonModel": "application",
+  "developers.cliSharedLockState.enabled": true,
+  "app.useHardwareAcceleration": true,
+  "sshAgent.enabled": true,
+}

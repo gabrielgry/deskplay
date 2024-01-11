@@ -83,6 +83,7 @@
           - i3
           - alacritty
           - rofi
+          - lxpolkit
           - firefox
           - xrandr
         state: present
@@ -116,10 +117,11 @@
         name:
           - 1password
           - 1password-cli
+          - polkit
         state: present
       become: true
 
-    - name: Verify if has an account
+    - name: Verify if has an 1Password account
       ansible.builtin.command: 'op account list'
       register: onepassword_account_list
       changed_when: false
@@ -154,6 +156,24 @@
                                         master_password=onepassword_master_password,
                                         username=onepassword_email.user_input,
                                         secret_key=onepassword_secret_key.user_input) }}"
+
+    - name: Copy SSH config files
+      ansible.builtin.copy:
+        src: ssh
+        dest: '/home/{{ user.name }}/.ssh'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Copy 1Password SSH Agent config
+      ansible.builtin.copy:
+        src: 1Password
+        dest: '/home/{{ user.name }}/.config/1Password'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
 
     - name: Create user
       ansible.builtin.user:
