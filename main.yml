@@ -86,6 +86,7 @@
           - lxpolkit
           - firefox
           - xrandr
+          - gnome-keyring
         state: present
       become: true
 
