@@ -87,6 +87,7 @@
           - firefox
           - xrandr
           - gnome-keyring
+          - feh
         state: present
       become: true
 
@@ -184,6 +185,24 @@
         append: true
         create_home: true
         state: present
+      become: true
+
+    - name: Ensure NerdFonts directory exists
+      ansible.builtin.file:
+        path: '/usr/share/fonts/nerd-fonts/JetBrainsMono'
+        state: directory
+      become: true
+
+    - name: Install JetBrainsMono Nerd Font
+      ansible.builtin.unarchive:
+        src: 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz'
+        dest: '/usr/share/fonts/nerd-fonts/JetBrainsMono/'
+        creates: '/usr/share/fonts/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont*'
+        remote_src: true
+      become: true
+
+    - name: Update font cache
+      ansible.builtin.command: 'fc-cache'
       become: true
 
     - name: Copy Xresources file
