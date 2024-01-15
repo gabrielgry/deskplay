@@ -90,6 +90,7 @@
           - gnome-keyring
           - feh
           - xdg-user-dirs
+          - dunst
         state: present
       become: true
 
