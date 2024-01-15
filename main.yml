@@ -56,6 +56,7 @@
     - name: Install RPM Fusion packages
       ansible.builtin.dnf:
         name: 'https://mirrors.rpmfusion.org/{{ item }}/fedora/rpmfusion-{{ item }}-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm'
+        state: present
       with_items:
         - 'free'
         - 'nonfree'
@@ -88,6 +89,7 @@
           - xrandr
           - gnome-keyring
           - feh
+          - xdg-user-dirs
         state: present
       become: true
 
@@ -197,12 +199,21 @@
       ansible.builtin.unarchive:
         src: 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz'
         dest: '/usr/share/fonts/nerd-fonts/JetBrainsMono/'
-        creates: '/usr/share/fonts/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont*'
+        creates: '/usr/share/fonts/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf'
         remote_src: true
       become: true
 
     - name: Update font cache
       ansible.builtin.command: 'fc-cache'
+      become: true
+
+    - name: Copy user-dirs file
+      ansible.builtin.copy:
+        src: user-dirs.dirs
+        dest: '/home/{{ user.name }}/.config/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
       become: true
 
     - name: Copy Xresources file
@@ -223,10 +234,19 @@
         mode: '0644'
       become: true
 
+    - name: Ensure git directory exists
+      ansible.builtin.file:
+        path: '/home/{{ user.name }}/.config/git'
+        state: directory
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0755'
+      become: true
+
     - name: Generate git Config
       ansible.builtin.template:
         src: gitconfig.j2
-        dest: '/home/{{ user.name }}/.gitconfig'
+        dest: '/home/{{ user.name }}/.config/git/config'
         owner: '{{ user.name }}'
         group: '{{ user.name }}'
         mode: '0644'
@@ -248,3 +268,15 @@
         single_branch: true
         version: master
         clone: true
+
+    - name: Import Google Chrome GPG keys
+      ansible.builtin.rpm_key:
+        key: '/usr/share/distribution-gpg-keys/google/linux_signing_key.pub'
+        state: present
+      become: true
+
+    - name: Install Google Chrome
+      ansible.builtin.dnf:
+        name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
+        state: present
+      become: true
