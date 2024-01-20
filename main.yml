@@ -208,14 +208,34 @@
       ansible.builtin.command: 'fc-cache'
       become: true
 
-    - name: Copy user-dirs file
-      ansible.builtin.copy:
-        src: user-dirs.dirs
-        dest: '/home/{{ user.name }}/.config/'
-        owner: '{{ user.name }}'
-        group: '{{ user.name }}'
-        mode: '0644'
+    - name: Setup xdg-user-dirs
       become: true
+      vars:
+        xdg_user_dirs:
+          desktop: ''
+          documents: ''
+          download: 'download'
+          music: ''
+          pictures: ''
+          public_share: ''
+          templates: ''
+          videos: ''
+      block:
+        - name: Create user directories
+          ansible.builtin.file:
+            path: '/home/{{ user.name }}/{{ item.value }}' 
+            owner: '{{ user.name }}'
+            group: '{{ user.name }}'
+            mode: '0755'
+          loop: "{{ xdg_user_dirs | dict2items | select() }}"
+
+        - name: Generate user-dirs.dirs config
+          ansible.builtin.template:
+            src: user-dirs.j2
+            dest: '/home/{{ user.name }}/.config/user-dirs.dirs'
+            owner: '{{ user.name }}'
+            group: '{{ user.name }}'
+            mode: '0644'
 
     - name: Copy Xresources file
       ansible.builtin.copy:
