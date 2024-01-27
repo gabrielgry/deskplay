@@ -36,11 +36,11 @@
         state: present
       become: true
 
-    # - name: Update system
-    #   ansible.builtin.dnf:
-    #     name: '*'
-    #     state: latest
-    #   become: true
+    - name: Update system
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+      become: true
 
     - name: Install Distribution GPG keys
       ansible.builtin.dnf:
