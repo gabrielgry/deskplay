@@ -118,6 +118,9 @@
         - name: Install rEFInd on ESP
           ansible.builtin.command: 'refind-install --yes'
 
+        - name: Make rEFInd default boot entry
+          ansible.builtin.command: 'refind-mkdefault'
+
         - name: Install rEFInd btrfs driver
           ansible.builtin.copy:
             src: '/usr/share/rEFInd/refind/drivers_x64/btrfs_x64.efi'
