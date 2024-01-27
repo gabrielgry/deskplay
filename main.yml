@@ -49,7 +49,7 @@
       become: true
 
     - name: Install RPM Fusion Repositories
-      when: "'rpmfusion' in ansible_facts.packages"
+      when: "'rpmfusion-free-release' not in ansible_facts.packages"
       block:
       - name: Import RPM Fusion GPG keys
         ansible.builtin.rpm_key:
@@ -78,7 +78,7 @@
       become: true
 
     - name: Install NVidia driver
-      when: "'akmod-nvidia' in ansible_facts.packages and ansible_facts.virtualization_role == 'host'"
+      when: "'akmod-nvidia' not in ansible_facts.packages and ansible_facts.virtualization_role == 'host'"
       block:
       - name: Install driver and graphics packages
         ansible.builtin.dnf:
