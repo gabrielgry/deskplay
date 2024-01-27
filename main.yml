@@ -106,6 +106,27 @@
       when: ansible_facts.virtualization_role == 'guest'
       become: true
 
+    - name: Setup rEFInd
+      when: "'rEFInd' not in ansible_facts.packages"
+      become: true
+      block:
+        - name: Install rEFInd package
+          ansible.builtin.dnf:
+            name: 'rEFInd'
+            state: present
+
+        - name: Install rEFInd on ESP
+          ansible.builtin.command: 'refind-install --yes'
+
+        - name: Install rEFInd btrfs driver
+          ansible.builtin.copy:
+            src: '/usr/share/rEFInd/refind/drivers_x64/btrfs_x64.efi'
+            dest: '/boot/efi/EFI/refind/drivers_x64/'
+            mode: 'u=rwx'
+            owner: 'root'
+            group: 'root'
+            remote_src: true
+
     - name: Install desktop packages
       ansible.builtin.dnf:
         name:
@@ -191,6 +212,16 @@
                                         username=onepassword_email.user_input,
                                         secret_key=onepassword_secret_key.user_input) }}"
 
+    - name: Create user
+      ansible.builtin.user:
+        name: "{{ user.name }}"
+        comment: "{{ user.full_name }}"
+        groups: "wheel"
+        append: true
+        create_home: true
+        state: present
+      become: true
+
     - name: Copy SSH config files
       ansible.builtin.copy:
         src: ssh
@@ -207,16 +238,6 @@
         owner: '{{ user.name }}'
         group: '{{ user.name }}'
         mode: '0644'
-      become: true
-
-    - name: Create user
-      ansible.builtin.user:
-        name: "{{ user.name }}"
-        comment: "{{ user.full_name }}"
-        groups: "wheel"
-        append: true
-        create_home: true
-        state: present
       become: true
 
     - name: Ensure NerdFonts directory exists
