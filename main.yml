@@ -319,14 +319,17 @@
         version: master
         clone: true
 
-    - name: Import Google Chrome GPG keys
-      ansible.builtin.rpm_key:
-        key: '/usr/share/distribution-gpg-keys/google/linux_signing_key.pub'
-        state: present
-      become: true
-
     - name: Install Google Chrome
-      ansible.builtin.dnf:
-        name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
-        state: present
-      become: true
+      when: "'google-chrome-stable' not in ansible_facts.packages"
+      block:
+      - name: Import Google Chrome GPG keys
+        ansible.builtin.rpm_key:
+          key: '/usr/share/distribution-gpg-keys/google/linux_signing_key.pub'
+          state: present
+        become: true
+
+      - name: Install Google Chrome stable package
+        ansible.builtin.dnf:
+          name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
+          state: present
+        become: true
