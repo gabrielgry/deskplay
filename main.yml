@@ -77,26 +77,27 @@
         state: present
       become: true
 
-    - name: Install NVidia drivers
-      ansible.builtin.dnf:
-        name:
-          - 'akmod-nvidia'
-          - 'xorg-x11-drv-nvidia-cuda'
-          - 'vulkan'
-          - 'xorg-x11-drv-nvidia-cuda-libs'
-          - 'nvidia-vaapi-driver'
-          - 'libva-utils'
-          - 'vdpauinfo'
-        state: present
-      when: ansible_facts.virtualization_role == 'guest'
-      become: true
+    - name: Install NVidia driver
+      when: "'akmod-nvidia' in ansible_facts.packages and ansible_facts.virtualization_role == 'host'"
+      block:
+      - name: Install driver and graphics packages
+        ansible.builtin.dnf:
+          name:
+            - 'akmod-nvidia'
+            - 'xorg-x11-drv-nvidia-cuda'
+            - 'vulkan'
+            - 'xorg-x11-drv-nvidia-cuda-libs'
+            - 'nvidia-vaapi-driver'
+            - 'libva-utils'
+            - 'vdpauinfo'
+          state: present
+        become: true
 
-    - name: Add Nvidia grub default configs
-      ansible.builtin.command: 'grubby --args="{{ item }}" --update-kernel=ALL'
-      loop:
-        - 'nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1'
-      when: ansible_facts.virtualization_role == 'guest'
-      become: true
+      - name: Add Nvidia grub default configs
+        ansible.builtin.command: 'grubby --args="{{ item }}" --update-kernel=ALL'
+        loop:
+          - 'nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1'
+        become: true
 
     - name: Install guest desktop agents
       ansible.builtin.dnf:
