@@ -225,7 +225,16 @@
     - name: Copy i3 configuration
       ansible.builtin.copy:
         src: i3
-        dest: '/home/{{ user.name }}/.config'
+        dest: '/home/{{ user.name }}/.config/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Copy Alacrity configuration
+      ansible.builtin.copy:
+        src: alacritty
+        dest: '/home/{{ user.name }}/.config/'
         owner: '{{ user.name }}'
         group: '{{ user.name }}'
         mode: '0644'
