@@ -10,6 +10,10 @@
       private: false
 
   tasks:
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: rpm
+
     - name: Get Systemd default target
       ansible.builtin.command: 'systemctl get-default'
       register: systemd_get_default_target
