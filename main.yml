@@ -203,9 +203,9 @@
           register: onepassword_secret_key
 
         - name: Add 1Password account
-          no_log: true
+          no_log: false
           ansible.builtin.debug:
-            msg: 'Adding 1Password account'
+            msg: 'Adding 1Password account. Test: {{ onepassword_login_test }}'
           vars:
             onepassword_login_test: "{{ lookup('community.general.onepassword',
                                         'PC User',
@@ -245,8 +245,8 @@
 
     - name: Copy SSH config files
       ansible.builtin.copy:
-        src: ssh
-        dest: '/home/{{ user.name }}/.ssh'
+        src: .ssh
+        dest: '/home/{{ user.name }}/'
         owner: '{{ user.name }}'
         group: '{{ user.name }}'
         mode: '0644'
@@ -255,7 +255,7 @@
     - name: Copy 1Password SSH Agent config
       ansible.builtin.copy:
         src: 1Password
-        dest: '/home/{{ user.name }}/.config/1Password'
+        dest: '/home/{{ user.name }}/.config/'
         owner: '{{ user.name }}'
         group: '{{ user.name }}'
         mode: '0644'
@@ -298,6 +298,7 @@
             owner: '{{ user.name }}'
             group: '{{ user.name }}'
             mode: '0755'
+            state: directory
           loop: "{{ xdg_user_dirs | dict2items | select() }}"
 
         - name: Generate user-dirs.dirs config
