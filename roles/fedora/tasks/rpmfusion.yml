@@ -1,0 +1,18 @@
+- name: Import RPM Fusion GPG keys
+  ansible.builtin.rpm_key:
+    key: "/usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-{{ item }}-fedora-{{ ansible_facts.distribution_major_version }}"
+    state: present
+  with_items:
+    - "free"
+    - "nonfree"
+  become: true
+
+- name: Install RPM Fusion packages
+  ansible.builtin.dnf:
+    name: "https://mirrors.rpmfusion.org/{{ item }}/fedora/rpmfusion-{{ item }}-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm"
+    state: present
+  with_items:
+    - "free"
+    - "nonfree"
+  when: "'rpmfusion-free-release' not in ansible_facts.packages"
+  become: true

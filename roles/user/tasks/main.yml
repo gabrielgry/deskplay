@@ -1,0 +1,19 @@
+- ansible.builtin.import_tasks:
+    file: user.yml
+  tags:
+    - user-user
+
+- ansible.builtin.import_tasks:
+    file: dotfiles.yml
+  tags:
+    - user-dotfiles
+
+- ansible.builtin.import_tasks:
+    file: xdgdirs.yml
+  tags:
+    - user-xdgdirs
+
+- ansible.builtin.import_tasks:
+    file: fonts.yml
+  tags:
+    - user-fonts

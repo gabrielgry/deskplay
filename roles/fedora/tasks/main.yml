@@ -1,0 +1,53 @@
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: rpm
+  tags:
+    - always
+
+- ansible.builtin.import_tasks:
+    file: initial.yml
+
+- ansible.builtin.import_tasks:
+    file: rpmfusion.yml
+  tags:
+    - system-rpmfusion
+
+- ansible.builtin.import_tasks:
+    file: refind.yml
+  tags:
+    - system-refind
+
+- ansible.builtin.import_tasks:
+    file: desktop.yml
+  tags:
+    - system-desktop
+
+- ansible.builtin.import_tasks:
+    file: flatpak.yml
+  tags:
+    - system-flatpak
+
+- ansible.builtin.import_tasks:
+    file: nvidia.yml
+  tags:
+    - system-nvidia
+
+- ansible.builtin.import_tasks:
+    file: vmguest.yml
+  tags:
+    - system-vmguest
+
+- ansible.builtin.import_tasks:
+    file: 1password.yml
+  tags:
+    - system-1password
+
+- ansible.builtin.import_tasks:
+    file: neovim.yml
+  tags:
+    - system-neovim
+
+- ansible.builtin.import_tasks:
+    file: chrome.yml
+  tags:
+    - system-chrome

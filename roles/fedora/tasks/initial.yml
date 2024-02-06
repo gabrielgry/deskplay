@@ -1,0 +1,30 @@
+- name: Configure dnf
+  community.general.ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: max_parallel_downloads
+    value: 10
+    no_extra_spaces: true
+    owner: "root"
+    group: "root"
+    mode: "u=rw,g=r,o=r"
+    state: present
+  become: true
+
+- name: Update system
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+  become: true
+
+- name: Install Distribution GPG keys
+  ansible.builtin.dnf:
+    name: distribution-gpg-keys
+    state: present
+  become: true
+
+- name: Set Systemd default target to graphical
+  ansible.builtin.command: "systemctl set-default graphical.target"
+  register: systemd_set_default_target
+  changed_when: "'graphical.target' in systemd_set_default_target.stdout"
+  become: true

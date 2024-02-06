@@ -1,0 +1,378 @@
+- name: Fedora setup
+  hosts: all
+
+  vars_files:
+    - user.yml
+
+  vars_prompt:
+    - name: onepassword_master_password
+      prompt: Enter 1Password master password
+      private: false
+
+  tasks:
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: rpm
+
+    - name: Get Systemd default target
+      ansible.builtin.command: 'systemctl get-default'
+      register: systemd_get_default_target
+      changed_when: false
+
+    - name: Set Systemd default target to graphical
+      ansible.builtin.command: 'systemctl set-default graphical.target'
+      register: systemd_set_default_target
+      when: "'graphical.target' not in systemd_get_default_target.stdout"
+      changed_when: "'graphical.target' in systemd_set_default_target.stdout"
+      become: true
+
+    - name: Configure dnf
+      community.general.ini_file:
+        path: /etc/dnf/dnf.conf
+        section: main
+        option: max_parallel_downloads
+        value: 10
+        no_extra_spaces: true
+        state: present
+      become: true
+
+    - name: Update system
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+      become: true
+
+    - name: Install Distribution GPG keys
+      ansible.builtin.dnf:
+        name: distribution-gpg-keys
+        state: present
+      become: true
+
+    - name: Install RPM Fusion Repositories
+      when: "'rpmfusion-free-release' not in ansible_facts.packages"
+      block:
+      - name: Import RPM Fusion GPG keys
+        ansible.builtin.rpm_key:
+          key: '/usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-{{ item }}-fedora-{{ ansible_facts.distribution_major_version }}'
+          state: present
+        with_items:
+          - 'free'
+          - 'nonfree'
+        become: true
+
+      - name: Install RPM Fusion packages
+        ansible.builtin.dnf:
+          name: 'https://mirrors.rpmfusion.org/{{ item }}/fedora/rpmfusion-{{ item }}-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm'
+          state: present
+        with_items:
+          - 'free'
+          - 'nonfree'
+        become: true
+
+    - name: Install basic packages
+      ansible.builtin.dnf:
+        name:
+          - '@base-x'
+          - '@hardware-support'
+        state: present
+      become: true
+
+    - name: Install NVidia driver
+      when: "'akmod-nvidia' not in ansible_facts.packages and ansible_facts.virtualization_role == 'host'"
+      block:
+      - name: Install driver and graphics packages
+        ansible.builtin.dnf:
+          name:
+            - 'akmod-nvidia'
+            - 'xorg-x11-drv-nvidia-cuda'
+            - 'vulkan'
+            - 'xorg-x11-drv-nvidia-cuda-libs'
+            - 'nvidia-vaapi-driver'
+            - 'libva-utils'
+            - 'vdpauinfo'
+          state: present
+        become: true
+
+      - name: Add Nvidia grub default configs
+        ansible.builtin.command: 'grubby --args="{{ item }}" --update-kernel=ALL'
+        loop:
+          - 'nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1'
+        become: true
+
+    - name: Install guest desktop agents
+      ansible.builtin.dnf:
+        name: '@guest-desktop-agents'
+        state: present
+      when: ansible_facts.virtualization_role == 'guest'
+      become: true
+
+    - name: Setup rEFInd
+      when: "'rEFInd' not in ansible_facts.packages"
+      become: true
+      block:
+        - name: Install rEFInd package
+          ansible.builtin.dnf:
+            name: 'rEFInd'
+            state: present
+
+        - name: Install rEFInd on ESP
+          ansible.builtin.command: 'refind-install --yes'
+
+        - name: Make rEFInd default boot entry
+          ansible.builtin.command: 'refind-mkdefault'
+
+        - name: Install rEFInd btrfs driver
+          ansible.builtin.copy:
+            src: '/usr/share/rEFInd/refind/drivers_x64/btrfs_x64.efi'
+            dest: '/boot/efi/EFI/refind/drivers_x64/'
+            mode: 'u=rwx'
+            owner: 'root'
+            group: 'root'
+            remote_src: true
+
+    - name: Install desktop packages
+      ansible.builtin.dnf:
+        name:
+          - lightdm-gtk
+          - i3
+          - alacritty
+          - rofi
+          - lxpolkit
+          - firefox
+          - xrandr
+          - gnome-keyring
+          - feh
+          - xdg-user-dirs
+          - dunst
+        state: present
+      become: true
+
+    - name: Enable LightDM service
+      ansible.builtin.systemd:
+        name: lightdm
+        enabled: true
+      become: true
+
+    - name: Add 1Password repository keys
+      ansible.builtin.rpm_key:
+        key: 'https://downloads.1password.com/linux/keys/1password.asc'
+        state: present
+      become: true
+
+    - name: Add 1Password repository
+      ansible.builtin.yum_repository:
+        name: 1password
+        description: 1Password Stable Channel
+        baseurl: 'https://downloads.1password.com/linux/rpm/stable/$basearch'
+        enabled: true
+        gpgcheck: true
+        repo_gpgcheck: true
+        gpgkey: 'https://downloads.1password.com/linux/keys/1password.asc'
+      become: true
+
+    - name: Install 1Password
+      ansible.builtin.dnf:
+        name:
+          - 1password
+          - 1password-cli
+          - polkit
+        state: present
+      become: true
+
+    - name: Verify if has an 1Password account
+      ansible.builtin.command: 'op account list'
+      register: onepassword_account_list
+      changed_when: false
+
+    - name: Get 1Password credentials
+      when: onepassword_account_list.stdout == ""
+      block:
+        - name: Get 1Password Subdomain
+          ansible.builtin.pause:
+            prompt: Enter 1Password subdomain
+          register: onepassword_subdomain
+
+        - name: Get 1Password email
+          ansible.builtin.pause:
+            prompt: Enter 1Password email
+          register: onepassword_email
+
+        - name: Get 1Password secret key
+          ansible.builtin.pause:
+            prompt: Enter 1Password secret key
+          register: onepassword_secret_key
+
+        - name: Add 1Password account
+          no_log: false
+          ansible.builtin.debug:
+            msg: 'Adding 1Password account. Test: {{ onepassword_login_test }}'
+          vars:
+            onepassword_login_test: "{{ lookup('community.general.onepassword',
+                                        'PC User',
+                                        field='username',
+                                        subdomain=onepassword_subdomain.user_input,
+                                        master_password=onepassword_master_password,
+                                        username=onepassword_email.user_input,
+                                        secret_key=onepassword_secret_key.user_input) }}"
+
+    - name: Create user
+      ansible.builtin.user:
+        name: "{{ user.name }}"
+        comment: "{{ user.full_name }}"
+        groups: "wheel"
+        append: true
+        create_home: true
+        state: present
+      become: true
+
+    - name: Copy i3 configuration
+      ansible.builtin.copy:
+        src: i3
+        dest: '/home/{{ user.name }}/.config/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Copy Alacrity configuration
+      ansible.builtin.copy:
+        src: alacritty
+        dest: '/home/{{ user.name }}/.config/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Copy SSH config files
+      ansible.builtin.copy:
+        src: .ssh
+        dest: '/home/{{ user.name }}/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Copy 1Password SSH Agent config
+      ansible.builtin.copy:
+        src: 1Password
+        dest: '/home/{{ user.name }}/.config/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Ensure NerdFonts directory exists
+      ansible.builtin.file:
+        path: '/usr/share/fonts/nerd-fonts/JetBrainsMono'
+        state: directory
+      become: true
+
+    - name: Install JetBrainsMono Nerd Font
+      ansible.builtin.unarchive:
+        src: 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz'
+        dest: '/usr/share/fonts/nerd-fonts/JetBrainsMono/'
+        creates: '/usr/share/fonts/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf'
+        remote_src: true
+      become: true
+
+    - name: Update font cache
+      ansible.builtin.command: 'fc-cache'
+      become: true
+
+    - name: Setup xdg-user-dirs
+      become: true
+      vars:
+        xdg_user_dirs:
+          desktop: ''
+          documents: ''
+          download: 'download'
+          music: ''
+          pictures: ''
+          public_share: ''
+          templates: ''
+          videos: ''
+      block:
+        - name: Create user directories
+          ansible.builtin.file:
+            path: '/home/{{ user.name }}/{{ item.value }}' 
+            owner: '{{ user.name }}'
+            group: '{{ user.name }}'
+            mode: '0755'
+            state: directory
+          loop: "{{ xdg_user_dirs | dict2items | select() }}"
+
+        - name: Generate user-dirs.dirs config
+          ansible.builtin.template:
+            src: user-dirs.j2
+            dest: '/home/{{ user.name }}/.config/user-dirs.dirs'
+            owner: '{{ user.name }}'
+            group: '{{ user.name }}'
+            mode: '0644'
+
+    - name: Copy Xresources file
+      ansible.builtin.copy:
+        src: .Xresources
+        dest: '/home/{{ user.name }}/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Copy profile file
+      ansible.builtin.copy:
+        src: .profile
+        dest: '/home/{{ user.name }}/'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Ensure git directory exists
+      ansible.builtin.file:
+        path: '/home/{{ user.name }}/.config/git'
+        state: directory
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0755'
+      become: true
+
+    - name: Generate git Config
+      ansible.builtin.template:
+        src: gitconfig.j2
+        dest: '/home/{{ user.name }}/.config/git/config'
+        owner: '{{ user.name }}'
+        group: '{{ user.name }}'
+        mode: '0644'
+      become: true
+
+    - name: Install Neovim
+      ansible.builtin.dnf:
+        name:
+          - neovim
+          - ripgrep
+          - '@c-development'
+        state: present
+      become: true
+
+    - name: Clone Neovim kickstart
+      ansible.builtin.git:
+        repo: 'https://github.com/nvim-lua/kickstart.nvim.git'
+        dest: '/home/{{ user.name }}/.config/nvim'
+        single_branch: true
+        version: master
+        clone: true
+
+    - name: Install Google Chrome
+      when: "'google-chrome-stable' not in ansible_facts.packages"
+      block:
+      - name: Import Google Chrome GPG keys
+        ansible.builtin.rpm_key:
+          key: '/usr/share/distribution-gpg-keys/google/linux_signing_key.pub'
+          state: present
+        become: true
+
+      - name: Install Google Chrome stable package
+        ansible.builtin.dnf:
+          name: "https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
+          state: present
+        become: true

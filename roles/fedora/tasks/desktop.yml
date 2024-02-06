@@ -1,0 +1,26 @@
+- name: Install desktop packages
+  ansible.builtin.dnf:
+    name:
+      - "@base-x"
+      - "@hardware-support"
+      - lightdm-gtk
+      - i3
+      - dunst
+      - rofi
+      - lxpolkit
+      - xrandr
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-user-dirs
+      - gnome-keyring
+      - flatpak
+      - feh
+      - alacritty
+    state: present
+  become: true
+
+- name: Enable LightDM service
+  ansible.builtin.systemd:
+    name: lightdm
+    enabled: true
+  become: true

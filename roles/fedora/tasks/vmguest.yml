@@ -1,0 +1,6 @@
+- name: Install guest desktop agents
+  ansible.builtin.dnf:
+    name: "@guest-desktop-agents"
+    state: present
+  when: ansible_facts.virtualization_role == 'guest'
+  become: true

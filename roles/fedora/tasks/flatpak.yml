@@ -1,0 +1,13 @@
+- name: Add Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+- name: Install Flatpak packages
+  community.general.flatpak:
+    name:
+      - org.mozilla.firefox
+      - com.google.Chrome
+      - org.qbittorrent.qBittorrent
+      - org.videolan.VLC

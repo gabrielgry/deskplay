@@ -1,0 +1,70 @@
+- name: Copy i3 configuration
+  ansible.builtin.copy:
+    src: i3
+    dest: "{{ user.home }}/.config/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
+- name: Copy Alacrity configuration
+  ansible.builtin.copy:
+    src: alacritty
+    dest: "{{ user.home }}/.config/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
+- name: Copy SSH config files
+  ansible.builtin.copy:
+    src: .ssh
+    dest: "{{ user.home }}/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
+- name: Copy 1Password SSH Agent config
+  ansible.builtin.copy:
+    src: 1Password
+    dest: "{{ user.home }}/.config/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
+- name: Copy Xresources file
+  ansible.builtin.copy:
+    src: .Xresources
+    dest: "{{ user.home }}/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
+- name: Copy profile file
+  ansible.builtin.copy:
+    src: .profile
+    dest: "{{ user.home }}/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
+- name: Clone Neovim kickstart
+  ansible.builtin.git:
+    repo: "https://github.com/nvim-lua/kickstart.nvim.git"
+    dest: "{{ user.home }}/.config/nvim"
+    single_branch: true
+    version: master
+    clone: true
+
+- name: Copy 1Password settings
+  ansible.builtin.copy:
+    src: 1Password
+    dest: "{{ user.home }}/.config/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true

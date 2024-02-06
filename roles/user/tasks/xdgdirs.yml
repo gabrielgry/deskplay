@@ -1,0 +1,16 @@
+- name: Create user directories
+  ansible.builtin.file:
+    path: "{{ user.home }}/{{ item.value }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"
+    state: directory
+  loop: "{{ user.xdg_dirs | dict2items | map(attribute='value') | reject('equalto', '') }}"
+
+- name: Generate user-dirs.dirs config
+  ansible.builtin.template:
+    src: user-dirs.j2
+    dest: "{{ user.home }}/.config/user-dirs.dirs"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
