@@ -1,6 +1,6 @@
 - name: Create user directories
   ansible.builtin.file:
-    path: "{{ user.home }}/{{ item.value }}"
+    path: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0755"
