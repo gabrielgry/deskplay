@@ -1,4 +1,4 @@
-- name: Install desktop packages
+- name: Install system packages
   ansible.builtin.dnf:
     name:
       - "@base-x"
@@ -18,6 +18,12 @@
       - alacritty
     state: present
   become: true
+
+- name: Remove system packages
+  ansible.builtin.dnf:
+    name:
+      - rxvt-unicode
+    state: absent
 
 - name: Enable LightDM service
   ansible.builtin.systemd:
