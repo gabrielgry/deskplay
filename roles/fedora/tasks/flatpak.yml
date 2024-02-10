@@ -8,8 +8,15 @@
 - name: Install Flatpak packages
   community.general.flatpak:
     name:
-      - org.mozilla.firefox
-      - com.google.Chrome
       - org.qbittorrent.qBittorrent
       - org.videolan.VLC
+    state: present
+  become: true
+
+- name: Remove Flatpak packages
+  community.general.flatpak:
+    name:
+      - org.mozilla.firefox
+      - com.google.Chrome
+    state: absent
   become: true
