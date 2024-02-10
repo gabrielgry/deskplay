@@ -7,6 +7,15 @@
     mode: "0644"
   become: true
 
+- name: Copy Autorandr configuration
+  ansible.builtin.copy:
+    src: autorandr
+    dest: "{{ user.home }}/.config/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0644"
+  become: true
+
 - name: Copy Alacrity configuration
   ansible.builtin.copy:
     src: alacritty
