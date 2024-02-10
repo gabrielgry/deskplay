@@ -51,4 +51,4 @@
     file: chrome.yml
   tags:
     - system-chrome
-    - never
+
