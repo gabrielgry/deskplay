@@ -1,5 +1,1 @@
-# fedora-setup
-
-## Todo
-
-- Credentials backup
+# Desktop setup
