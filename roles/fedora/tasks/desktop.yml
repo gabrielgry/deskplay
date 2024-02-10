@@ -24,6 +24,7 @@
     name:
       - rxvt-unicode
     state: absent
+  become: true
 
 - name: Enable LightDM service
   ansible.builtin.systemd:
