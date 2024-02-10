@@ -34,15 +34,6 @@
     mode: "0644"
   become: true
 
-- name: Copy 1Password SSH Agent config
-  ansible.builtin.copy:
-    src: 1Password
-    dest: "{{ user.home }}/.config/"
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-    mode: "0644"
-  become: true
-
 - name: Copy Xresources file
   ansible.builtin.copy:
     src: .Xresources
