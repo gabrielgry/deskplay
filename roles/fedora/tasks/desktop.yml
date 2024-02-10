@@ -9,6 +9,7 @@
       - rofi
       - lxpolkit
       - xrandr
+      - autorandr
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-user-dirs
