@@ -10,6 +10,7 @@
       - lxpolkit
       - xrandr
       - autorandr
+      - xset
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-user-dirs
