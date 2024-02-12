@@ -10,7 +10,6 @@
     name:
       - org.qbittorrent.qBittorrent
       - org.videolan.VLC
-      - fr.handbrake.ghb
     state: present
   become: true
 
