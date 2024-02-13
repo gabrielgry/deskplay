@@ -1,0 +1,5 @@
+[Unit]
+Description=Fetch and apply Bing wallpaper
+
+[Service]
+ExecStart=%h/.scripts/bing-wallpaper.sh

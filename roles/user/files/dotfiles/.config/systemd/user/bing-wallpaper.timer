@@ -1,0 +1,7 @@
+[unit]
+Description=Fetch new Bing wallpapers
+
+[Timer]
+OnActiveSec=1
+OnCalendar=*-*-* 00:05:00
+Persistent=true

@@ -1,4 +1,4 @@
-- name: Create user
+- name: Create or update user
   ansible.builtin.user:
     name: "{{ user.name }}"
     comment: "{{ user.full_name }}"

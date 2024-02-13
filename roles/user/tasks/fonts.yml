@@ -5,7 +5,6 @@
     group: "{{ user.name }}"
     mode: "0755"
     state: directory
-  become: true
 
 - name: Install JetBrainsMono Nerd Font
   ansible.builtin.unarchive:
@@ -13,8 +12,6 @@
     dest: "{{ user.home }}/.local/share/fonts/nerd-fonts/JetBrainsMono/"
     creates: "{{ user.home }}/.local/share/fonts/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf"
     remote_src: true
-  become: true
 
 - name: Update font cache
   ansible.builtin.command: "fc-cache"
-  become: true
