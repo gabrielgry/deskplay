@@ -3,6 +3,7 @@
     name:
       - "@base-x"
       - "@hardware-support"
+      - "@networkmanager-submodules"
       - lightdm-gtk
       - i3
       - dunst
