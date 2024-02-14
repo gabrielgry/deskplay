@@ -16,17 +16,23 @@
       - xdg-desktop-portal-gtk
       - xdg-user-dirs
       - gnome-keyring
+      - adwaita-cursor-theme
+      - adwaita-gtk2-theme
+      - adwaita-icon-theme
+      - adwaita-qt5
+      - adwaita-qt6
+      - libadwaita
+      - libadwaita-qt5
+      - libadwaita-qt6
       - flatpak
       - feh
       - alacritty
     state: present
-  become: true
-
-- name: Remove system packages
-  ansible.builtin.dnf:
-    name:
+    exclude:
       - rxvt-unicode
-    state: absent
+      - xss-lock
+      - dmenu
+    update_cache: true
   become: true
 
 - name: Enable LightDM service

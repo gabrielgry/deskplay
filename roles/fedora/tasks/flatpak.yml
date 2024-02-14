@@ -10,13 +10,8 @@
     name:
       - org.qbittorrent.qBittorrent
       - org.videolan.VLC
+      - org.kde.KStyle.Adwaita
+      - org.gtk.Gtk3theme.Adwaita-dark
     state: present
   become: true
 
-- name: Remove Flatpak packages
-  community.general.flatpak:
-    name:
-      - org.mozilla.firefox
-      - com.google.Chrome
-    state: absent
-  become: true

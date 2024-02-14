@@ -15,6 +15,7 @@
   ansible.builtin.dnf:
     name: "*"
     state: latest
+    update_cache: true
   become: true
 
 - name: Install Distribution GPG keys
