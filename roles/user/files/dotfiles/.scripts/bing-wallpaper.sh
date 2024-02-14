@@ -45,13 +45,15 @@ if ! [[ -d $directory ]]; then
 	mkdir -p $directory 
 fi
 
-if ! [[ -e "$wallpaper" ]]; then
-	status_code=$(curl --write-out %{http_code} --silent --output "$wallpaper" "$url")
+status_code=$(curl --write-out %{http_code} --silent --output "$wallpaper.new" "$url")
 
-	if [[ status_code -eq "200" ]]; then
-		notify-send -u low "New Bing Wallpaper" "$info"
-	fi
+if [[ status_code -eq "200" ]]; then
+	rm -f "$wallpaper"
+	mv "$wallpaper.new" "$wallpaper"
+	notify-send -u low "New Bing Wallpaper" "$info"
 fi
+
+rm -f "$wallpaper.new"
 
 set_wallpaper
 exit 0
