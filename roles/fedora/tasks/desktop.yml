@@ -4,6 +4,7 @@
       - "@base-x"
       - "@hardware-support"
       - "@networkmanager-submodules"
+      - "@multimedia"
       - lightdm-gtk
       - i3
       - dunst
@@ -13,21 +14,15 @@
       - autorandr
       - xset
       - picom
-      - xdg-desktop-portal
-      - xdg-desktop-portal-gtk
       - xdg-user-dirs
       - gnome-keyring
       - adwaita-cursor-theme
       - adwaita-gtk2-theme
       - adwaita-icon-theme
-      - adwaita-qt5
-      - adwaita-qt6
-      - libadwaita
-      - libadwaita-qt5
-      - libadwaita-qt6
-      - flatpak
       - feh
       - alacritty
+      - mpv
+      - transmission
     state: present
     exclude:
       - rxvt-unicode

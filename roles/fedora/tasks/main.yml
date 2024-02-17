@@ -25,7 +25,8 @@
 - ansible.builtin.import_tasks:
     file: flatpak.yml
   tags:
-    - system-flatpak
+    - never
+    # - system-flatpak
 
 - ansible.builtin.import_tasks:
     file: nvidia.yml

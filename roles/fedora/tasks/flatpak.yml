@@ -1,3 +1,9 @@
+- name: Install Flatpak support
+  ansible.builtin.dnf:
+    name: flatpak
+    state: present
+  become: true
+
 - name: Add Flathub repository
   community.general.flatpak_remote:
     name: flathub

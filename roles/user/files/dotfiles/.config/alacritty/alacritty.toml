@@ -1,2 +1,6 @@
 [font.normal]
-family="JetBrainsMono NF"
+family = "JetBrainsMono NF"
+
+[shell]
+program = "/usr/bin/fish"
+args = ["--interactive"]
