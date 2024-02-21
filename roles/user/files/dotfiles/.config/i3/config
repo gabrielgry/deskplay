@@ -26,7 +26,7 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 exec --no-startup-id lxpolkit
 exec --no-startup-id 1password --silent
 exec --no-startup-id systemctl --user start bing-wallpaper.timer
-exec --no-startup-id i3-autolayout autolayout
+exec --no-startup-id $HOME/.cargo/bin/i3-autolayout autolayout
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
