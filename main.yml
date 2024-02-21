@@ -17,3 +17,4 @@
     - role: secrets
       tags:
         - secrets
+        - never

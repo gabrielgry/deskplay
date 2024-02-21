@@ -6,6 +6,13 @@
     group: "{{ user.name }}"
     mode: preserve
 
+- name: install i3-auto-layout
+  community.general.cargo:
+    name: i3-autolayout
+    state: present
+  become_user: "{{ user.name }}"
+  become: true
+
 - name: Clone Neovim kickstart
   ansible.builtin.git:
     repo: "https://github.com/nvim-lua/kickstart.nvim.git"

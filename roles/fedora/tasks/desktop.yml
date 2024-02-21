@@ -7,6 +7,7 @@
       - "@multimedia"
       - lightdm-gtk
       - i3
+      - cargo
       - dunst
       - rofi
       - lxpolkit
@@ -36,4 +37,12 @@
   ansible.builtin.systemd:
     name: lightdm
     enabled: true
+  become: true
+
+- name: Show sudo password feedback
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    regexp: "^Defaults env_reset"
+    line: "Defaults env_reset,pwfeedback"
+    state: present
   become: true
