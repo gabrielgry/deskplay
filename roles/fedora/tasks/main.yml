@@ -1,4 +1,4 @@
-- name: Gather the package facts
+- name: gather the package facts
   ansible.builtin.package_facts:
     manager: rpm
   tags:
@@ -22,11 +22,10 @@
   tags:
     - system-desktop
 
-- ansible.builtin.import_tasks:
-    file: flatpak.yml
-  tags:
-    - never
-    # - system-flatpak
+# - ansible.builtin.import_tasks:
+#     file: flatpak.yml
+#   tags:
+#     - system-flatpak
 
 - ansible.builtin.import_tasks:
     file: nvidia.yml

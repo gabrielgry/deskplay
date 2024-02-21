@@ -3,13 +3,3 @@ user:
   full_name: "Gabriel Grysuk"
 
   home: "/home/gabriel"
-
-  xdg_dirs:
-    desktop: ""
-    documents: ""
-    download: "download"
-    music: ""
-    pictures: ""
-    public_share: ""
-    templates: ""
-    videos: ""

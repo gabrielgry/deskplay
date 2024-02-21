@@ -8,10 +8,10 @@
   tags:
     - user-dotfiles
 
-- ansible.builtin.import_tasks:
-    file: xdgdirs.yml
-  tags:
-    - user-xdgdirs
+# - ansible.builtin.import_tasks:
+#     file: xdgdirs.yml
+#   tags:
+#     - user-xdgdirs
 
 - ansible.builtin.import_tasks:
     file: fonts.yml
