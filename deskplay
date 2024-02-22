@@ -1,0 +1,47 @@
+#!/bin/bash
+
+directory=$HOME/deskplay
+editor=nvim
+
+echo $@
+
+run_tags() {
+	if [[ -z "$1" ]]; then
+		tags="system,user"
+	else
+		tags="$1"
+	fi
+
+	ansible-playbook $directory/main.yml \
+		--inventory $directory/inventory.ini \
+		--tags "$tags" \
+		--ask-become-pass 
+}
+
+setup() {
+	dnf install ansible -y
+	run_tags "$1"
+}
+
+edit() {
+	case "$1" in
+		user) $editor $directory/roles/user/
+		;;
+		fedora) $editor $directory/roles/fedora/
+		;;
+		secrets) $editor $directory/roles/secrets/
+		;;
+		*) $editor $directory
+	esac
+}
+
+case "$1" in
+	"setup") setup "$2"
+	;;
+	"edit") edit "$2"
+	;;
+	"run") run_tags "$2"
+	;;
+	*) echo "Invalid command" 
+	;;
+esac
