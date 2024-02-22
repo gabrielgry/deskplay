@@ -30,7 +30,6 @@
       - rxvt-unicode
       - xss-lock
       - dmenu
-    update_cache: true
   become: true
 
 - name: Enable LightDM service
@@ -39,7 +38,7 @@
     enabled: true
   become: true
 
-- name: Show sudo password feedback
+- name: Enable sudo password feedback
   ansible.builtin.lineinfile:
     path: /etc/sudoers
     regexp: "^Defaults env_reset"
