@@ -1,6 +1,16 @@
+import = [
+  # "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
 [font.normal]
 family = "JetBrainsMono NF"
 
 [shell]
-program = "/usr/bin/fish"
-args = ["--interactive"]
+program = "/usr/bin/bash"
+
+[window]
+opacity = 1.0
+
+[mouse]
+hide_when_typing = true
+
