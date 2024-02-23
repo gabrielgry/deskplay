@@ -24,7 +24,6 @@
       - alacritty
       - mpv
       - transmission
-      - fish
     state: present
     exclude:
       - rxvt-unicode
