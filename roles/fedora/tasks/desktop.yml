@@ -7,23 +7,22 @@
       - "@multimedia"
       - lightdm-gtk
       - i3
-      - cargo
       - dunst
       - rofi
-      - lxpolkit
+      - mate-polkit
       - xrandr
       - autorandr
       - xset
       - picom
       - xdg-user-dirs
-      - gnome-keyring
+      - gnome-keyring-pam
       - adwaita-cursor-theme
       - adwaita-gtk2-theme
       - adwaita-icon-theme
       - feh
+      - cargo
       - alacritty
       - mpv
-      - transmission
     state: present
     exclude:
       - rxvt-unicode

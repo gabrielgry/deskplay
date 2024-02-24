@@ -1,3 +1,8 @@
+- name: Verify if system has Nvidia GPU
+  ansible.builtin.shell: "lspci | grep NVIDIA"
+  register: lspci_nvidia
+  become: true
+
 - name: Install Nvidia driver and graphics packages
   ansible.builtin.dnf:
     name:
@@ -8,10 +13,12 @@
       - "libva-utils"
       - "vulkan"
     state: present
+  when: lspci_nvidia | length > 0 
   become: true
 
 - name: Add Kernel parameters for Nvidia driver
   ansible.builtin.command: 'grubby --args="{{ item }}" --update-kernel=ALL'
   loop:
     - "nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1"
+  when: lspci_nvidia | length > 0 
   become: true
