@@ -1,0 +1,27 @@
+[global]
+font = "Inter 10"
+format = "<i>%a:</i>\n<b>%s</b>\n%b\n"
+frame_color = "#89B4FA40"
+separator_color= frame
+origin = top-center
+scale = 2
+width = (300, 600)
+padding = 16
+corner_radius = 3 
+horizontal_padding = 16
+line_height = 4
+frame_width = 1
+icon_path = "/usr/share/icons/gnome/256x256/status/:/usr/share/icons/gnome/256x256/devices/"
+
+[urgency_low]
+background = "#1E1E2E85"
+foreground = "#CDD6F4"
+
+[urgency_normal]
+background = "#1E1E2E85"
+foreground = "#CDD6F4"
+
+[urgency_critical]
+background = "#1E1E2E85"
+foreground = "#CDD6F4"
+frame_color = "#FAB38740"

@@ -9,6 +9,7 @@
       - i3
       - dunst
       - rofi
+      - polybar
       - mate-polkit
       - xrandr
       - autorandr
@@ -22,7 +23,9 @@
       - feh
       - cargo
       - alacritty
+      - ranger
       - mpv
+      - rtorrent
     state: present
     exclude:
       - rxvt-unicode

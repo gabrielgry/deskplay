@@ -19,7 +19,7 @@ run_tags() {
 }
 
 setup() {
-	dnf install ansible -y
+	sudo dnf install ansible -y
 	run_tags "$1"
 }
 

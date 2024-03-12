@@ -1,0 +1,8 @@
+- name: Disable wifi power save
+  ansible.builtin.copy:
+    src: network-manager/wifi-powersave-off.conf
+    dest: /etc/NetworkManager/conf.d/
+    mode: "u=rw,g=r,o=r"
+    owner: root
+    group: root
+  become: true

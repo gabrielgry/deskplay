@@ -38,6 +38,11 @@
     - system-vmguest
 
 - ansible.builtin.import_tasks:
+    file: network-manager.yml
+  tags:
+    - system-network-manager
+
+- ansible.builtin.import_tasks:
     file: 1password.yml
   tags:
     - system-1password
