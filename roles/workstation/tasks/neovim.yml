@@ -1,0 +1,8 @@
+- name: Install Neovim
+  ansible.builtin.dnf:
+    name:
+      - neovim
+      - ripgrep
+      - "@c-development"
+    state: present
+  become: true

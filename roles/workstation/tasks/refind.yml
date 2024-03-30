@@ -1,0 +1,23 @@
+- name: Install rEFInd package
+  ansible.builtin.dnf:
+    name: "rEFInd"
+    state: present
+  become: true
+
+- name: Install rEFInd on ESP
+  ansible.builtin.command: "refind-install --yes"
+  become: true
+
+- name: Make rEFInd default boot entry
+  ansible.builtin.command: "refind-mkdefault"
+  become: true
+
+# - name: Install rEFInd btrfs driver
+#   ansible.builtin.copy:
+#     src: "/usr/share/rEFInd/refind/drivers_x64/btrfs_x64.efi"
+#     dest: "/boot/efi/EFI/refind/drivers_x64/"
+#     mode: "u=rwx"
+#     owner: "root"
+#     group: "root"
+#     remote_src: true
+#   become: true

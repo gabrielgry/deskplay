@@ -1,0 +1,95 @@
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: rpm
+  tags:
+    - always
+
+- name: Import user tasks
+  ansible.builtin.import_tasks:
+    file: user.yml
+  tags: user
+
+- name: Import DNF tasks
+  ansible.builtin.import_tasks:
+    file: dnf.yml
+  tags: dnf
+
+- name: Import RPM Fusion tasks
+  ansible.builtin.import_tasks:
+    file: rpm-fusion.yml
+  tags: rpm-fusion
+
+- name: Import codecs tasks
+  ansible.builtin.import_tasks:
+    file: codecs.yml
+  tags: codecs
+
+- name: Import GDM tasks
+  ansible.builtin.import_tasks:
+    file: gdm.yml
+  tags: gdm
+
+- name: Import Iwlwifi tasks
+  ansible.builtin.import_tasks:
+    file: iwlwifi.yml
+  tags: iwlwifi
+
+- name: Import sudoers tasks
+  ansible.builtin.import_tasks:
+    file: sudoers.yml
+  tags: sudoers
+
+- name: Import Nvidia tasks
+  ansible.builtin.import_tasks:
+    file: nvidia.yml
+  tags: nvidia
+
+- name: Import rEFInd tasks
+  ansible.builtin.import_tasks:
+    file: refind.yml
+  tags: refind
+
+- name: Import Flatpak tasks
+  ansible.builtin.import_tasks:
+    file: flatpak.yml
+  tags: flatpak
+
+- name: Import fonts tasks
+  ansible.builtin.import_tasks:
+    file: fonts.yml
+  tags: fonts
+
+- name: Import Google Chrome tasks
+  ansible.builtin.import_tasks:
+    file: chrome.yml
+  tags: chrome
+
+- name: Import 1Password tasks
+  ansible.builtin.import_tasks:
+    file: onepassword.yml
+  tags: onepassword
+
+- name: Import SSH tasks
+  ansible.builtin.import_tasks:
+    file: ssh.yml
+  tags: ssh
+
+- name: Import Neovim tasks
+  ansible.builtin.import_tasks:
+    file: neovim.yml
+  tags: neovim
+
+- name: Import Gnome tasks
+  ansible.builtin.import_tasks:
+    file: gnome.yml
+  tags: gnome
+
+- name: Import Gnome extensions tasks
+  ansible.builtin.import_tasks:
+    file: gnome-extensions.yml
+  tags: gnome-extensions
+
+- name: Import Paperwm tasks
+  ansible.builtin.import_tasks:
+    file: paperwm.yml
+  tags: paperwm

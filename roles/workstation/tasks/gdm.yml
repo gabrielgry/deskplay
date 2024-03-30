@@ -1,0 +1,23 @@
+- name: Disable GDM Wayland support
+  ansible.builtin.ini_file:
+    path: /etc/gdm/custom.conf
+    section: 'daemon'
+    option: 'WaylandEnable'
+    value: 'false'
+    state: present
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+  become: true
+
+- name: Set default Gnome session to xorg 
+  ansible.builtin.ini_file:
+    path: /etc/gdm/custom.conf
+    section: 'daemon'
+    option: 'DefaultSession'
+    value: 'gnome-xorg.desktop'
+    state: present
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+  become: true

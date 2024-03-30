@@ -1,0 +1,9 @@
+- name: Configure user
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    comment: "{{ user.full_name }}"
+    groups: "wheel"
+    append: true
+    create_home: true
+    state: present
+  become: true

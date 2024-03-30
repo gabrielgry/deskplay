@@ -1,0 +1,7 @@
+- name: Enable sudo's password feedback
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    regexp: "^Defaults env_reset"
+    line: "Defaults env_reset,pwfeedback"
+    state: present
+  become: true

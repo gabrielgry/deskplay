@@ -1,0 +1,17 @@
+- name: Install Nvidia driver and graphics packages
+  ansible.builtin.dnf:
+    name:
+      - "akmod-nvidia"
+      - "xorg-x11-drv-nvidia-cuda"
+      - "xorg-x11-drv-nvidia-cuda-libs"
+      - "nvidia-vaapi-driver"
+      - "libva-utils"
+      - "vulkan"
+    state: present
+  become: true
+
+- name: Add Kernel parameters for Nvidia driver
+  ansible.builtin.command: 'grubby --args="{{ item }}" --update-kernel=ALL'
+  loop:
+    - "nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1"
+  become: true

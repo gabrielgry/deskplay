@@ -1,0 +1,22 @@
+- name: Ensure wifi 11n is enabled
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/iwlwifi.conf
+    regexp: '.*11n_disable.*'
+    line: 'options iwlwifi 11n_disable=8'
+    state: present
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+    create: true
+  become: true
+
+- name: Ensure wifi power save is disabled
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/iwlwifi.conf
+    regexp: '.*power_save.*'
+    line: 'options iwlwifi power_save=0'
+    state: present
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+  become: true

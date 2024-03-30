@@ -1,0 +1,7 @@
+- name: Copy SSH configuration files
+  ansible.builtin.copy:
+    src: ssh/
+    dest: "{{ user.home }}/.ssh/"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "u=rw"

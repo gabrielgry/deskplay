@@ -1,0 +1,11 @@
+- name: Ensure google-chrome repository is enabled
+  community.general.dnf_config_manager:
+    name: google-chrome
+    state: enabled
+  become: true
+
+- name: Install Google Chrome stable
+  ansible.builtin.dnf:
+    name: google-chrome-stable
+    state: present
+  become: true

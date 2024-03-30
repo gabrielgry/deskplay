@@ -1,0 +1,14 @@
+- name: Swap ffmpeg-free with ffmpeg
+  ansible.builtin.command: |
+    dnf swap ffmpeg-free ffmpeg --allowerasing -y
+  become: true
+
+- name: Install additional codecs
+  ansible.builtin.command: |
+    dnf groupupdate multimedia --setopt=\"install_weak_deps=False\" --exclude=PackageKit-gstreamer-plugin -y
+  become: true
+
+- name: Install the sound-and-video complement packages
+  ansible.builtin.command: |
+    dnf groupupdate sound-and-video -y
+  become: true

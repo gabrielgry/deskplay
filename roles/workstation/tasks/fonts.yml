@@ -1,0 +1,17 @@
+- name: Ensure NerdFonts directory exists
+  ansible.builtin.file:
+    path: "{{ user.home }}/.local/share/fonts/nerd-fonts/JetBrainsMono"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "u=rwx,g=rx,o=rx"
+    state: directory
+
+- name: Install JetBrainsMono Nerd Font
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+    dest: "{{ user.home }}/.local/share/fonts/nerd-fonts/JetBrainsMono/"
+    creates: "{{ user.home }}/.local/share/fonts/nerd-fonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf"
+    remote_src: true
+
+- name: Update font cache
+  ansible.builtin.command: "fc-cache"

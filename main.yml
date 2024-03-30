@@ -1,0 +1,14 @@
+- name: Fedora Workstation setup
+  hosts: all
+
+  vars_files:
+    - user.yml
+
+  roles:
+    - role: workstation
+      tags: workstation
+
+    - role: secrets
+      tags:
+        - secrets
+        - never

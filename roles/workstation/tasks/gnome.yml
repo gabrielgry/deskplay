@@ -1,0 +1,46 @@
+##################################################
+# Interface
+##################################################
+
+- name: Set Jetbrains Mono Nerd as monospaced font
+  ansible.builtin.command: |
+    gsettings set org.gnome.desktop.interface monospace-font-name "JetBrainsMono Nerd Font 10"
+
+- name: Set dark color scheme
+  ansible.builtin.command: |
+    gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+
+##################################################
+# Keybindinds
+##################################################
+
+# - name: Disable dynamic workspaces
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.mutter dynamic-workspaces false
+
+# - name: Set number of workspaces
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.desktop.wm.preferences num-workspaces 10
+
+# - name: Unset keybindings for switch to application
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.shell.keybindings switch-to-application-{{ item | string }} []
+#   with_sequence: start=1 end=9
+
+# - name: Set keybindings for switch to workspace
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-{{ item | string }} [\"<Super>{{ item | string }}\"]
+#   with_sequence: start=1 end=9
+
+# - name: Set keybinding for switch to workspace 10
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-10 [\"<Super>0\"]
+
+# - name: Set keybindings for move to workspace
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-{{ item | string }} [\"<Shift><Super>{{ item | string }}\"]
+#   with_sequence: start=1 end=9
+
+# - name: Set keybinding for move to workspace 10
+#   ansible.builtin.command: |
+#     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10 [\"<Shift><Super>0\"]

@@ -1,0 +1,9 @@
+- name: Copy Network Manager powersave configuration file
+  ansible.builtin.copy:
+    src: networkmanager/wifi-powersave-off.conf
+    dest: "/etc/NetworkManager/conf.d/"
+    owner: "root"
+    group: "root"
+    mode: "u=rw,g=r,o=r"
+    directory_mode: "u=rwx,g=rx,o=rx"
+  become: true
