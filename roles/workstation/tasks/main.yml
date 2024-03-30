@@ -19,6 +19,11 @@
     file: rpm-fusion.yml
   tags: rpm-fusion
 
+- name: Import packages tasks
+  ansible.builtin.import_tasks:
+    file: packages.yml
+  tags: packages
+
 - name: Import codecs tasks
   ansible.builtin.import_tasks:
     file: codecs.yml
