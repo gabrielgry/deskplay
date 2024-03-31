@@ -1,0 +1,27 @@
+- name: Install Bing Wallpaper extensions
+  ansible.builtin.command: |
+    busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ item }}
+  with_items:
+    - BingWallpaper@ineffable-gmail.com
+  failed_when: false
+
+- name: Ensure Vault's Bing Wallpaper folder exists 
+  ansible.builtin.file:
+    path: "{{ user.home }}/Vault/Archive/Wallpapers/Bing Wallpaper"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    directory_mode: "u=rwx,g=rx,o=rx"
+
+- name: Set Bing Wallpaper folder
+  ansible.builtin.command: |
+    gsettings set org.gnome.shell.extensions.bingwallpaper download-folder \"{{ user.name }}/Vault/Archive/Wallpapers/Bing Wallpaper\"
+
+- name: Set Bing Wallpaper market
+  ansible.builtin.command: |
+    gsettings set org.gnome.shell.extensions.bingwallpaper market \"pt-BR\"
+
+- name: Set Bing Wallpaper resolution
+  ansible.builtin.command: |
+    gsettings set org.gnome.shell.extensions.bingwallpaper resolution \"UHD\"
+

@@ -1,0 +1,38 @@
+- name: Ensure Vault folder exists
+  ansible.builtin.file:
+    path: "{{ user.home }}/Vault"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    directory_mode: "u=rwx,g=rx,o=rx"
+
+- name: Create Vault folders
+  ansible.builtin.file:
+    path: "{{ user.home }}/Vault/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    directory_mode: "u=rwx,g=rx,o=rx"
+  with_items:
+      - Archive
+      - Backups
+      - Documents
+      - Projects
+      - Media
+      - Resources
+
+- name: Create Vault media folders
+  ansible.builtin.file:
+    path: "{{ user.home }}/Vault/{{ item }}/Media"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    directory_mode: "u=rwx,g=rx,o=rx"
+  with_items:
+      - Anime
+      - Books
+      - Games
+      - Movies
+      - Music
+      - Series
+

@@ -9,6 +9,11 @@
     file: user.yml
   tags: user
 
+- name: Import Vault folder tasks:
+  ansible.builtin.import_tasks:
+    file: vault-folders.yml
+  tags: vault-folders
+
 - name: Import DNF tasks
   ansible.builtin.import_tasks:
     file: dnf.yml
@@ -93,6 +98,11 @@
   ansible.builtin.import_tasks:
     file: gnome-extensions.yml
   tags: gnome-extensions
+
+- name: Import Bing Wallpaper tasks
+  ansible.builtin.import_tasks:
+    file: bing-wallpaper.yml
+  tags: bing-wallpaper
 
 - name: Import Paperwm tasks
   ansible.builtin.import_tasks:

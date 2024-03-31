@@ -8,7 +8,7 @@
 - name: Install Gnome extensions
   ansible.builtin.command: "busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ item }}"
   with_items:
-    - BingWallpaper@ineffable-gmail.com
+    # - BingWallpaper@ineffable-gmail.com
     # - paperwm@paperwm.github.com
     - appindicatorsupport@rgcjonas.gmail.com
   failed_when: false
