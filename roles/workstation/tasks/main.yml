@@ -4,12 +4,18 @@
   tags:
     - always
 
+- name: Import Deskplay dependencies tasks
+  ansible.builtin.import_tasks:
+    file: deskplay-dependencies.yml
+  tags:
+    - deskplay-dependencies
+
 - name: Import user tasks
   ansible.builtin.import_tasks:
     file: user.yml
   tags: user
 
-- name: Import Vault folder tasks:
+- name: Import Vault folder tasks
   ansible.builtin.import_tasks:
     file: vault-folders.yml
   tags: vault-folders

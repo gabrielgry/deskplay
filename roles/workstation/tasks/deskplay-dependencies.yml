@@ -1,0 +1,6 @@
+- name: Install Deskplay dependencies
+  ansible.builtin.dnf:
+    name:
+      - python3-psutil
+    state: present
+  become: true

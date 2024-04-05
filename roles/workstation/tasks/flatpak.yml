@@ -3,11 +3,19 @@
     name: flathub
     state: present
     flatpakrepo_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
-  become: true
 
 - name: Install Flatpak packages
   community.general.flatpak:
     name:
       - com.spotify.Client
+      - ca.desrt.dconf-editor
+      - org.qbittorrent.qBittorrent
     state: present
-  become: true
+
+- name: Remove Flatpak packages
+  community.general.flatpak:
+    name:
+      - de.haeckerfelix.Fragments
+    state: absent
+
+

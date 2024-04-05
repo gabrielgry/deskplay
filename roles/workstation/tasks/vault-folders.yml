@@ -4,7 +4,7 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: directory
-    directory_mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Create Vault folders
   ansible.builtin.file:
@@ -12,7 +12,7 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: directory
-    directory_mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rwx,g=rx,o=rx"
   with_items:
       - Archive
       - Backups
@@ -23,11 +23,11 @@
 
 - name: Create Vault media folders
   ansible.builtin.file:
-    path: "{{ user.home }}/Vault/{{ item }}/Media"
+    path: "{{ user.home }}/Vault/Media/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: directory
-    directory_mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rwx,g=rx,o=rx"
   with_items:
       - Anime
       - Books

@@ -11,17 +11,23 @@
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
-    directory_mode: "u=rwx,g=rx,o=rx"
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Set Bing Wallpaper folder
-  ansible.builtin.command: |
-    gsettings set org.gnome.shell.extensions.bingwallpaper download-folder \"{{ user.name }}/Vault/Archive/Wallpapers/Bing Wallpaper\"
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/bingwallpaper/download-folder"
+    value: "'{{ user.home }}/Vault/Archive/Wallpapers/Bing Wallpaper'" 
+    state: present
 
 - name: Set Bing Wallpaper market
-  ansible.builtin.command: |
-    gsettings set org.gnome.shell.extensions.bingwallpaper market \"pt-BR\"
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/bingwallpaper/market"
+    value: "'pt-BR'" 
+    state: present
 
-- name: Set Bing Wallpaper resolution
-  ansible.builtin.command: |
-    gsettings set org.gnome.shell.extensions.bingwallpaper resolution \"UHD\"
+- name: Set Bing Wallpaper market
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/bingwallpaper/resolution"
+    value: "'UHD'"
+    state: present
 
