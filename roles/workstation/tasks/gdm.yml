@@ -21,3 +21,14 @@
     group: root
     mode: 'u=rw,g=r,o=r'
   become: true
+
+- name: Copy monitors configuration file
+  ansible.builtin.copy:
+    src: gdm/monitors.xml
+    dest: /var/lib/gdm/.config/monitors.xml
+    owner: gdm
+    group: gdm
+    mode: 'u=rw'
+    directory_mode: 'u=rwx'
+  become: true
+
