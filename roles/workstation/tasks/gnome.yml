@@ -10,6 +10,12 @@
   ansible.builtin.command: |
     gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 
+- name: Set volume step
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/volume-step"
+    value: "2"
+    state: present
+
 ##################################################
 # Keybindinds
 ##################################################
