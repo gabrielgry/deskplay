@@ -6,3 +6,11 @@
       - "@c-development"
     state: present
   become: true
+
+- name: Clone Neovim kickstart
+  ansible.builtin.git:
+    repo: "https://github.com/nvim-lua/kickstart.nvim.git"
+    dest: "{{ user.home }}/.config/nvim"
+    single_branch: true
+    version: master
+    clone: true
