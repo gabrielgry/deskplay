@@ -11,4 +11,5 @@
     # - BingWallpaper@ineffable-gmail.com
     # - paperwm@paperwm.github.com
     - appindicatorsupport@rgcjonas.gmail.com
+    - launch-new-instance@gnome-shell-extensions.gcampax.github.com
   failed_when: false

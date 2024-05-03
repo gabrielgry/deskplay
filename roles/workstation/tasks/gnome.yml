@@ -3,12 +3,16 @@
 ##################################################
 
 - name: Set Jetbrains Mono Nerd as monospaced font
-  ansible.builtin.command: |
-    gsettings set org.gnome.desktop.interface monospace-font-name "JetBrainsMono Nerd Font 10"
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/monospace-font-name"
+    value: "'JetBrainsMono Nerd Font 10'"
+    state: present
 
-- name: Set dark color scheme
-  ansible.builtin.command: |
-    gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+# - name: Set dark color scheme
+#   community.general.dconf:
+#     key: "/org/gnome/desktop/interface/color-scheme"
+#     value: "'prefer-dark'"
+#     state: present
 
 - name: Set volume step
   community.general.dconf:
@@ -16,37 +20,204 @@
     value: "2"
     state: present
 
+- name: Disable dynamic workspace
+  community.general.dconf:
+    key: "/org/gnome/mutter/dynamic-workspaces"
+    value: false 
+    state: present
+
+- name: Set number of workspaces
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/preferences/num-workspaces"
+    value: "10" 
+    state: present
+
+- name: Set power settings 
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}" 
+    state: present
+  loop:
+    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
+      value: "'nothing'"
+    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
+      value: "'nothing'"
+    - key: "/org/gnome/desktop/screensaver/lock-enabled"
+      value: "false"
 ##################################################
 # Keybindinds
 ##################################################
 
-# - name: Disable dynamic workspaces
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.mutter dynamic-workspaces false
+# Shell keybindings
 
-# - name: Set number of workspaces
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.desktop.wm.preferences num-workspaces 10
+- name: Unset shell keybindigs 
+  community.general.dconf:
+    key: "/org/gnome/shell/keybindings/{{ item | string }}"
+    value: "['']" 
+    state: present
+  loop:
+    - focus-active-notification
+    - screenshot
+    - screenshot-window
+    - shift-overview-up
+    - shift-overview-down
+    - show-screen-recording-ui
+    - show-screenshot-ui
+    - toggle-application-view
+    - toggle-message-tray
+    - toggle-quick-settings
 
-# - name: Unset keybindings for switch to application
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.shell.keybindings switch-to-application-{{ item | string }} []
-#   with_sequence: start=1 end=9
+- name: Set switch to application keybindings
+  community.general.dconf:
+    key: "/org/gnome/shell/keybindings/switch-to-application-{{ item | string }}"
+    value: "['<Shift><Super><Control>{{ item | string }}']" 
+    state: present
+  with_sequence: start=1 end=9
 
-# - name: Set keybindings for switch to workspace
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-{{ item | string }} [\"<Super>{{ item | string }}\"]
-#   with_sequence: start=1 end=9
+- name: Set open new window application keybindings
+  community.general.dconf:
+    key: "/org/gnome/shell/keybindings/open-new-window-application-{{ item | string }}"
+    value: "['<Super><Control>{{ item | string }}']" 
+    state: present
+  with_sequence: start=1 end=9
 
-# - name: Set keybinding for switch to workspace 10
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-10 [\"<Super>0\"]
+# Media keys
 
-# - name: Set keybindings for move to workspace
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-{{ item | string }} [\"<Shift><Super>{{ item | string }}\"]
-#   with_sequence: start=1 end=9
+- name: Unset media keybindigs 
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/{{ item | string }}"
+    value: "['']" 
+    state: present
+  loop:
+    - help
+    - logout
+    - magnifier-zoom-in
+    - magnifier-zoom-out
+    - magnifier
+    - screenreader
+    - screensaver
 
-# - name: Set keybinding for move to workspace 10
-#   ansible.builtin.command: |
-#     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10 [\"<Shift><Super>0\"]
+- name: Set media keybindings 
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/{{ item.key }}"
+    value: "{{ item.value }}" 
+    state: present
+  loop:
+    - key: "rotate-video-lock-static"
+      value: "['XF86RotationLockToggle']"
+
+# Mutter keybindigs
+
+- name: Unset shell keybindigs 
+  community.general.dconf:
+    key: "/org/gnome/mutter/keybindings/{{ item | string }}"
+    value: "['']" 
+    state: present
+  loop:
+    - cancel-input-capture
+    - toggle-tiled-left
+    - toggle-tiled-right
+
+- name: Unset shell keybindigs 
+  community.general.dconf:
+    key: "/org/gnome/mutter/wayland/keybindings/{{ item | string }}"
+    value: "['']" 
+    state: present
+  loop:
+    - restore-shortcuts
+
+# Window manager keybindings
+
+- name: Unset window manager keybindigs 
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item | string }}"
+    value: "['']" 
+    state: present
+  loop:
+    - switch-to-workspace-up
+    - switch-to-workspace-down
+    - switch-to-workspace-right
+    - switch-to-workspace-left
+    - switch-to-workspace-last
+    - move-to-workspace-up
+    - move-to-workspace-down
+    - move-to-workspace-right
+    - move-to-workspace-left
+    - move-to-workspace-last
+    - move-to-monitor-up
+    - move-to-monitor-down
+    - move-to-monitor-right
+    - move-to-monitor-left
+    - toggle-maximized
+    - maximize
+    - unmaximize
+    - minimize
+    - activate-window-menu
+    - begin-move
+    - begin-resize
+    - close
+    - cycle-group
+    - cycle-group-backward
+    - cycle-panels
+    - cycle-panels-backward
+    - cycle-windows
+    - cycle-windows-backward
+    - panel-run-dialog
+    - switch-input-source
+    - switch-input-source-backward
+    - switch-panels
+    - switch-panels-backward
+    - switch-applications
+    - switch-applications-backward
+    - switch-group
+    - switch-group-backward
+
+# - name: Set various window manager keybindings 
+#   community.general.dconf:
+#     key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+#     value: "{{ item.value }}" 
+#     state: present
+#   loop:
+#     - key: "switch-applications"
+#       value: "['<Super>Tab']"
+#     - key: "switch-applications-backward"
+#       value: "['<Super><Shift>Tab']"
+#     - key: "switch-group"
+#       value: "['<Super>Above_Tab']"
+#     - key: "switch-group-backward"
+#       value: "['<Super><Shift>Above_Tab']"
+
+- name: Set switch to workspace keybindings
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/keybindings/switch-to-workspace-{{ item | string | replace('0', '10') }}"
+    value: "['<Super>{{ item | string }}']" 
+    state: present
+  with_sequence: start=0 end=9
+
+- name: Set move to workspace keybindings
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/keybindings/move-to-workspace-{{ item | string | replace('0', '10') }}"
+    value: "['<Shift><Super>{{ item | string }}']" 
+    state: present
+  with_sequence: start=0 end=9
+
+- name: Set open terminal keybinding 
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}" 
+    state: present
+  loop:
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+      value: "'Open terminal'"
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+      value: "'gnome-terminal'"
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+      value: "'<Super>Return'"
+
+- name: Set custom keybindings paths 
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    value: |
+      ['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
+    state: present
+

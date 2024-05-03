@@ -4,9 +4,6 @@
     return_content: true
   register: r_jetbrains_toolbox_info
 
-- debug:
-    var: r_jetbrains_toolbox_info
-
 - name: Create temporary directory for JetBrains Toolbox
   ansible.builtin.file:
     path: /tmp/jetbrains_toolbox
@@ -32,15 +29,9 @@
     list_files: true
   register: r_jetbrains_toolbox_files
 
-- debug:
-    var: r_jetbrains_toolbox_files
-
 - name: Run JetBrains Toolbox
   ansible.builtin.shell: "/tmp/jetbrains_toolbox/{{r_jetbrains_toolbox_files.files[1]}}"
   register: r_jetbrains_toolbox_run
-
-- debug:
-    var: r_jetbrains_toolbox_run
 
 - name: Delete JetBrains Toolbox temporary directory
   ansible.builtin.file:

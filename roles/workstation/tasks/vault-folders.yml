@@ -36,3 +36,16 @@
       - Music
       - Series
 
+- name: Ensure gtk3 config folder exists
+  ansible.builtin.file:
+    path: "{{ user.home }}/.config/gtk-3.0"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Template vault bookmarks
+  ansible.builtin.template:
+    src: vault/bookmarks.j2
+    dest: "{{ user.home }}/.config/gtk-3.0/bookmarks"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "u=rw,g=r,o=r"

@@ -1,1 +1,97 @@
 
+- name: Install Paperwm extensions
+  ansible.builtin.command: |
+    busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ item }}
+  with_items:
+    - paperwm@paperwm.github.com
+  failed_when: false
+
+- name: Set Paperwm settings 
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/paperwm/{{ item.key }}"
+    value: "{{ item.value }}" 
+    state: present
+  loop:
+    - key: show-window-position-bar 
+      value: "false"
+    - key: show-workspace-indicator
+      value: "false"
+    - key: gesture-enabled
+      value: "false"
+    - key: gesture-enabled
+      value: "false"
+    - key: gesture-horizontal-fingers
+      value: "0"
+    - key: gesture-workspace-fingers
+      value: "0"
+    - key: horizontal-margin 
+      value: "12"
+    - key: vertical-margin
+      value: "12"
+    - key: vertical-margin-bottom
+      value: "12"
+    - key: selection-border-size
+      value: "12"
+    - key: window-gap
+      value: "24"
+
+- name: Unset Paperwm keybindigs 
+  community.general.dconf:
+    key: "/org/gnome/shell/keybindings/{{ item | string }}"
+    value: "['']" 
+    state: present
+  loop:
+    - new-window
+    - take-window
+    - switch-next
+    - switch-previous
+    - switch-up
+    - switch-down
+    - switch-left
+    - switch-right
+    - previous-workspace
+    - previous-workspace-backward
+    - move-previous-workspace
+    - move-previous-workspace-backward
+    - move-up-workspace
+    - move-down-workspace
+    - switch-up-workspace
+    - switch-down-workspace
+    - move-monitor-above
+    - move-monitor-below
+    - move-monitor-left
+    - move-monitor-right
+    - move-space-monitor-above
+    - move-space-monitor-below
+    - move-space-monitor-left
+    - move-space-monitor-right
+    - swap-monitor-above
+    - swap-monitor-below
+    - swap-monitor-left
+    - swap-monitor-right
+    - switch-monitor-above
+    - switch-monitor-below
+    - switch-monitor-left
+    - switch-monitor-right
+
+
+- name: Set Paperwm keybindings 
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/paperwm/keybindings/{{ item.key }}"
+    value: "{{ item.value }}" 
+    state: present
+  loop:
+    - key: cycle-width
+      value: "['<Super>r']"
+    - key: cycle-width-backwards
+      value: "['<Shift><Super>r']"
+    - key: cycle-height
+      value: "['<Alt><Super>r']"
+    - key: cycle-height-backwards
+      value: "['<Shift><Alt><Super>r']"
+    - key: live-alt-tab
+      value: "['<Super>Tab']"
+    - key: live-alt-tab-scratch
+      value: "['<Control><Super>Tab']"
+    - key: live-alt-tab-scratch-backward
+      value: "['<Shift><Control><Super>Tab']"
