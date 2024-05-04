@@ -10,11 +10,13 @@
       - com.spotify.Client
       - ca.desrt.dconf-editor
       - org.qbittorrent.qBittorrent
+      - io.httpie.Httpie
     state: present
 
 - name: Remove Flatpak packages
   community.general.flatpak:
     name:
+      - com.usebruno.Bruno
       - de.haeckerfelix.Fragments
     state: absent
 
