@@ -172,12 +172,14 @@
     - switch-group
     - switch-group-backward
 
-# - name: Set various window manager keybindings 
-#   community.general.dconf:
-#     key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
-#     value: "{{ item.value }}" 
-#     state: present
-#   loop:
+- name: Set various window manager keybindings 
+  community.general.dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+    value: "{{ item.value }}" 
+    state: present
+  loop:
+    - key: "maximize"
+      value: "['<Super>m']"
 #     - key: "switch-applications"
 #       value: "['<Super>Tab']"
 #     - key: "switch-applications-backward"
