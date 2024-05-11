@@ -1,10 +1,10 @@
 
-- name: Install Paperwm extensions
-  ansible.builtin.command: |
-    busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ item }}
-  with_items:
-    - paperwm@paperwm.github.com
-  failed_when: false
+# - name: Install Paperwm extensions
+#   ansible.builtin.command: |
+#     busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ item }}
+#   with_items:
+#     - paperwm@paperwm.github.com
+#   failed_when: false
 
 - name: Set Paperwm settings 
   community.general.dconf:
@@ -37,7 +37,7 @@
 
 - name: Unset Paperwm keybindigs 
   community.general.dconf:
-    key: "/org/gnome/shell/keybindings/{{ item | string }}"
+    key: "/org/gnome/shell/extensions/paperwm/keybindings/{{ item | string }}"
     value: "['']" 
     state: present
   loop:
@@ -49,6 +49,10 @@
     - switch-down
     - switch-left
     - switch-right
+    - move-up
+    - move-down
+    - move-left
+    - move-right
     - previous-workspace
     - previous-workspace-backward
     - move-previous-workspace
@@ -81,6 +85,22 @@
     value: "{{ item.value }}" 
     state: present
   loop:
+    - key: switch-up
+      value: "['<Super>k','<Super>Up']"
+    - key: switch-down
+      value: "['<Super>j','<Super>Down']"
+    - key: switch-left
+      value: "['<Super>h','<Super>Left']"
+    - key: switch-right
+      value: "['<Super>l','<Super>Right']"
+    - key: move-up
+      value: "['<Shift><Super>k','<Shift><Super>Up']"
+    - key: move-down
+      value: "['<Shift><Super>j','<Shift><Super>Down']"
+    - key: move-left
+      value: "['<Shift><Super>h','<Shift><Super>Left']"
+    - key: move-right
+      value: "['<Shift><Super>l','<Shift><Super>Right']"
     - key: cycle-width
       value: "['<Super>r']"
     - key: cycle-width-backwards

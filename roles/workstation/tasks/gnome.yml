@@ -8,11 +8,11 @@
     value: "'JetBrainsMono Nerd Font 10'"
     state: present
 
-# - name: Set dark color scheme
-#   community.general.dconf:
-#     key: "/org/gnome/desktop/interface/color-scheme"
-#     value: "'prefer-dark'"
-#     state: present
+- name: Set dark color scheme
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/color-scheme"
+    value: "'prefer-dark'"
+    state: present
 
 - name: Set volume step
   community.general.dconf:
@@ -178,7 +178,7 @@
     value: "{{ item.value }}" 
     state: present
   loop:
-    - key: "maximize"
+    - key: "toggle-maximized"
       value: "['<Super>m']"
 #     - key: "switch-applications"
 #       value: "['<Super>Tab']"
