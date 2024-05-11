@@ -1,10 +1,9 @@
-
-# - name: Install Paperwm extensions
-#   ansible.builtin.command: |
-#     busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ item }}
-#   with_items:
-#     - paperwm@paperwm.github.com
-#   failed_when: false
+- name: install Paperwm extension
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: enable-gnome-extension
+  vars:
+    extension_id: paperwm@paperwm.github.com
 
 - name: Set Paperwm settings 
   community.general.dconf:
@@ -45,14 +44,6 @@
     - take-window
     - switch-next
     - switch-previous
-    - switch-up
-    - switch-down
-    - switch-left
-    - switch-right
-    - move-up
-    - move-down
-    - move-left
-    - move-right
     - previous-workspace
     - previous-workspace-backward
     - move-previous-workspace
@@ -77,7 +68,6 @@
     - switch-monitor-below
     - switch-monitor-left
     - switch-monitor-right
-
 
 - name: Set Paperwm keybindings 
   community.general.dconf:
@@ -111,7 +101,15 @@
       value: "['<Shift><Alt><Super>r']"
     - key: live-alt-tab
       value: "['<Super>Tab']"
+    - key: live-alt-tab-backward
+      value: "['<Super><Shift>Tab']"
     - key: live-alt-tab-scratch
       value: "['<Control><Super>Tab']"
     - key: live-alt-tab-scratch-backward
       value: "['<Shift><Control><Super>Tab']"
+    - key: toggle-scratch
+      value: "['<Super><Shift>s']"
+    - key: toggle-scratch-layer
+      value: "['<Super><Alt>s']"
+    - key: toggle-scratch-window
+      value: "['<Super>s']"

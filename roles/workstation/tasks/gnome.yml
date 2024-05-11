@@ -148,7 +148,6 @@
     - move-to-monitor-down
     - move-to-monitor-right
     - move-to-monitor-left
-    - toggle-maximized
     - maximize
     - unmaximize
     - minimize
