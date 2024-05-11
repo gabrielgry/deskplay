@@ -3,7 +3,7 @@
   "sshAgent.sshAuthorizatonModel": "application",
   "developers.cliSharedLockState.enabled": true,
   "app.useHardwareAcceleration": true,
-  "app.theme": "system",
+  "app.theme": "dark",
   "sshAgent.enabled": true,
   "security.authenticatedUnlock.enabled": true
 }
