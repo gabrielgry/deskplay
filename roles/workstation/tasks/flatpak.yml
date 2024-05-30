@@ -11,6 +11,7 @@
       - ca.desrt.dconf-editor
       - org.qbittorrent.qBittorrent
       - io.httpie.Httpie
+      - org.videolan.VLC
     state: present
 
 - name: Remove Flatpak packages

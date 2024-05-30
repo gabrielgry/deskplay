@@ -1,0 +1,13 @@
+- name: Get list of enabled gnome-extensions
+  community.general.dconf:
+    key: "/org/gnome/shell/enabled-extensions"
+    state: read
+  register: r_enabled_gnome_extensions
+
+- debug:
+    var: r_enabled_gnome_extensions
+
+- name: Install Gnome extensions
+  ansible.builtin.command: "busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ extension_id }}"
+  when: "extension_id not in r_enabled_gnome_extensions.value"
+  failed_when: false
