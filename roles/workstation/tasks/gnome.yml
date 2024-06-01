@@ -50,22 +50,22 @@
 
 # Shell keybindings
 
-- name: Unset shell keybindigs 
-  community.general.dconf:
-    key: "/org/gnome/shell/keybindings/{{ item | string }}"
-    value: "['']" 
-    state: present
-  loop:
-    - focus-active-notification
-    - screenshot
-    - screenshot-window
-    - shift-overview-up
-    - shift-overview-down
-    - show-screen-recording-ui
-    - show-screenshot-ui
-    - toggle-application-view
-    - toggle-message-tray
-    - toggle-quick-settings
+# - name: Unset shell keybindigs 
+#   community.general.dconf:
+#     key: "/org/gnome/shell/keybindings/{{ item | string }}"
+#     value: "['']" 
+#     state: present
+#   loop:
+#     - focus-active-notification
+#     - screenshot
+#     - screenshot-window
+#     - shift-overview-up
+#     - shift-overview-down
+#     - show-screen-recording-ui
+#     - show-screenshot-ui
+#     - toggle-application-view
+#     - toggle-message-tray
+#     - toggle-quick-settings
 
 - name: Set switch to application keybindings
   community.general.dconf:
@@ -83,102 +83,103 @@
 
 # Media keys
 
-- name: Unset media keybindigs 
-  community.general.dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/{{ item | string }}"
-    value: "['']" 
-    state: present
-  loop:
-    - help
-    - logout
-    - magnifier-zoom-in
-    - magnifier-zoom-out
-    - magnifier
-    - screenreader
-    - screensaver
+# - name: Unset media keybindigs 
+#   community.general.dconf:
+#     key: "/org/gnome/settings-daemon/plugins/media-keys/{{ item | string }}"
+#     value: "['']" 
+#     state: present
+#   loop:
+#     - help
+#     - logout
+#     - magnifier-zoom-in
+#     - magnifier-zoom-out
+#     - magnifier
+#     - screenreader
+#     - screensaver
 
-- name: Set media keybindings 
-  community.general.dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/{{ item.key }}"
-    value: "{{ item.value }}" 
-    state: present
-  loop:
-    - key: "rotate-video-lock-static"
-      value: "['XF86RotationLockToggle']"
+# - name: Set media keybindings 
+#   community.general.dconf:
+#     key: "/org/gnome/settings-daemon/plugins/media-keys/{{ item.key }}"
+#     value: "{{ item.value }}" 
+#     state: present
+#   loop:
+#     - key: "rotate-video-lock-static"
+#       value: "['XF86RotationLockToggle']"
 
 # Mutter keybindigs
 
-- name: Unset shell keybindigs 
-  community.general.dconf:
-    key: "/org/gnome/mutter/keybindings/{{ item | string }}"
-    value: "['']" 
-    state: present
-  loop:
-    - cancel-input-capture
-    - toggle-tiled-left
-    - toggle-tiled-right
+# - name: Unset shell keybindigs 
+#   community.general.dconf:
+#     key: "/org/gnome/mutter/keybindings/{{ item | string }}"
+#     value: "['']" 
+#     state: present
+#   loop:
+#     - cancel-input-capture
+#     - toggle-tiled-left
+#     - toggle-tiled-right
 
-- name: Unset shell keybindigs 
-  community.general.dconf:
-    key: "/org/gnome/mutter/wayland/keybindings/{{ item | string }}"
-    value: "['']" 
-    state: present
-  loop:
-    - restore-shortcuts
+# - name: Unset shell keybindigs 
+#   community.general.dconf:
+#     key: "/org/gnome/mutter/wayland/keybindings/{{ item | string }}"
+#     value: "['']" 
+#     state: present
+#   loop:
+#     - restore-shortcuts
 
 # Window manager keybindings
 
-- name: Unset window manager keybindigs 
-  community.general.dconf:
-    key: "/org/gnome/desktop/wm/keybindings/{{ item | string }}"
-    value: "['']" 
-    state: present
-  loop:
-    - switch-to-workspace-up
-    - switch-to-workspace-down
-    - switch-to-workspace-right
-    - switch-to-workspace-left
-    - switch-to-workspace-last
-    - move-to-workspace-up
-    - move-to-workspace-down
-    - move-to-workspace-right
-    - move-to-workspace-left
-    - move-to-workspace-last
-    - move-to-monitor-up
-    - move-to-monitor-down
-    - move-to-monitor-right
-    - move-to-monitor-left
-    - maximize
-    - unmaximize
-    - minimize
-    - activate-window-menu
-    - begin-move
-    - begin-resize
-    - close
-    - cycle-group
-    - cycle-group-backward
-    - cycle-panels
-    - cycle-panels-backward
-    - cycle-windows
-    - cycle-windows-backward
-    - panel-run-dialog
-    - switch-input-source
-    - switch-input-source-backward
-    - switch-panels
-    - switch-panels-backward
-    - switch-applications
-    - switch-applications-backward
-    - switch-group
-    - switch-group-backward
+# - name: Unset window manager keybindigs 
+#   community.general.dconf:
+#     key: "/org/gnome/desktop/wm/keybindings/{{ item | string }}"
+#     value: "['']" 
+#     state: present
+#   loop:
+#     - switch-to-workspace-up
+#     - switch-to-workspace-down
+#     - switch-to-workspace-right
+#     - switch-to-workspace-left
+#     - switch-to-workspace-last
+#     - move-to-workspace-up
+#     - move-to-workspace-down
+#     - move-to-workspace-right
+#     - move-to-workspace-left
+#     - move-to-workspace-last
+#     - move-to-monitor-up
+#     - move-to-monitor-down
+#     - move-to-monitor-right
+#     - move-to-monitor-left
+#     - maximize
+#     - unmaximize
+#     - minimize
+#     - activate-window-menu
+#     - begin-move
+#     - begin-resize
+#     - close
+#     - cycle-group
+#     - cycle-group-backward
+#     - cycle-panels
+#     - cycle-panels-backward
+#     - cycle-windows
+#     - cycle-windows-backward
+#     - panel-run-dialog
+#     - switch-input-source
+#     - switch-input-source-backward
+#     - switch-panels
+#     - switch-panels-backward
+#     - switch-applications
+#     - switch-applications-backward
+#     - switch-group
+#     - switch-group-backward
 
-- name: Set various window manager keybindings 
-  community.general.dconf:
-    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
-    value: "{{ item.value }}" 
-    state: present
-  loop:
-    - key: "toggle-maximized"
-      value: "['<Super>m']"
+# - name: Set various window manager keybindings 
+#   community.general.dconf:
+#     key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+#     value: "{{ item.value }}" 
+#     state: present
+#   loop:
+#     - key: "toggle-maximized"
+#       value: "['<Super>m']"
+
 #     - key: "switch-applications"
 #       value: "['<Super>Tab']"
 #     - key: "switch-applications-backward"

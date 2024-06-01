@@ -9,5 +9,8 @@
   ansible.builtin.dnf:
     name: 
       - mpv
+      - podman
+      - podman-compose
+      - distrobox
     state: present
   become: true

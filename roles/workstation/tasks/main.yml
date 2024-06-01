@@ -110,12 +110,17 @@
     file: bing-wallpaper.yml
   tags: bing-wallpaper
 
-- name: Import Paperwm tasks
-  ansible.builtin.import_tasks:
-    file: paperwm.yml
-  tags: paperwm
+#- name: Import Paperwm tasks
+#  ansible.builtin.import_tasks:
+#    file: paperwm.yml
+#  tags: paperwm
 
 - name: Import Jetbrains tasks
   ansible.builtin.import_tasks:
     file: jetbrains.yml
   tags: jetbrains
+
+- name: Import Docker tasks
+  ansible.builtin.import_tasks:
+    file: docker.yml
+  tags: docker
