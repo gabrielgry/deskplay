@@ -20,6 +20,7 @@
       - Projects
       - Media
       - Resources
+  become: true
 
 - name: Create Vault media folders
   ansible.builtin.file:
@@ -35,12 +36,16 @@
       - Movies
       - Music
       - Series
+  become: true
 
 - name: Ensure gtk3 config folder exists
   ansible.builtin.file:
     path: "{{ user.home }}/.config/gtk-3.0"
     state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
     mode: "u=rwx,g=rx,o=rx"
+  become: true
 
 - name: Template vault bookmarks
   ansible.builtin.template:
@@ -49,3 +54,4 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "u=rw,g=r,o=r"
+  become: true
