@@ -1,0 +1,16 @@
+- name: Import DNF tasks
+  ansible.builtin.import_tasks: dnf.yml
+  tags: dnf
+
+- name: Import Iwlwifi tasks
+  ansible.builtin.import_tasks: iwlwifi.yml
+  tags: iwlwifi
+
+# - name: Import NetworkManager tasks
+#   ansible.builtin.import_tasks: network-manager.yml
+#   tags: network-manger
+
+- name: Import sudoers tasks
+  ansible.builtin.import_tasks: sudoers.yml
+  tags: sudoers
+

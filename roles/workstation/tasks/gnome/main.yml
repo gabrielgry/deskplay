@@ -1,0 +1,4 @@
+- ansible.builtin.import_tasks: extensions/main.yml
+- ansible.builtin.import_tasks: gdm/gdm.yml
+- ansible.builtin.import_tasks: settings.yml
+- ansible.builtin.import_tasks: keybindings.yml

@@ -1,12 +1,12 @@
 - name: Install Nvidia driver and graphics packages
   ansible.builtin.dnf:
     name:
-      - "akmod-nvidia"
-      - "xorg-x11-drv-nvidia-cuda"
-      - "xorg-x11-drv-nvidia-cuda-libs"
-      - "nvidia-vaapi-driver"
-      - "libva-utils"
-      - "vulkan"
+      - akmod-nvidia
+      - xorg-x11-drv-nvidia-cuda
+      - xorg-x11-drv-nvidia-cuda-libs
+      - nvidia-vaapi-driver
+      - libva-utils
+      - vulkan
     state: present
   become: true
 

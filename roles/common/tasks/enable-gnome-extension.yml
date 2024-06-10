@@ -8,16 +8,3 @@
   ansible.builtin.command: gext install --filesystem {{ extension_id }}
   register: r_gext
 
-- debug:
-    var: r_gext
-
-# - name: Get list of enabled gnome-extensions
-#   community.general.dconf:
-#     key: "/org/gnome/shell/enabled-extensions"
-#     state: read
-#   register: r_enabled_gnome_extensions
-#
-# - name: Install Gnome extensions
-#   ansible.builtin.command: "busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s {{ extension_id }}"
-#   when: "r_enabled_gnome_extensions.value == None or extension_id not in r_enabled_gnome_extensions.value"
-#   failed_when: false

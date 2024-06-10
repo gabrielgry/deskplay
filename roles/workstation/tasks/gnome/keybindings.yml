@@ -1,61 +1,3 @@
-##################################################
-# Interface
-##################################################
-
-- name: Set Jetbrains Mono Nerd as monospaced font
-  community.general.dconf:
-    key: "/org/gnome/desktop/interface/monospace-font-name"
-    value: "'JetBrainsMono Nerd Font 10'"
-    state: present
-
-- name: Set dark color scheme
-  community.general.dconf:
-    key: "/org/gnome/desktop/interface/color-scheme"
-    value: "'prefer-dark'"
-    state: present
-
-- name: Set volume step
-  community.general.dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/volume-step"
-    value: "2"
-    state: present
-
-- name: Disable dynamic workspace
-  community.general.dconf:
-    key: "/org/gnome/mutter/dynamic-workspaces"
-    value: false 
-    state: present
-
-- name: Set number of workspaces
-  community.general.dconf:
-    key: "/org/gnome/desktop/wm/preferences/num-workspaces"
-    value: "10" 
-    state: present
-
-- name: Set number of workspaces
-  community.general.dconf:
-    key: "/org/gnome/desktop/wm/preferences/auto-raise"
-    value: "true" 
-    state: present
-
-- name: Set power settings 
-  community.general.dconf:
-    key: "{{ item.key }}"
-    value: "{{ item.value }}" 
-    state: present
-  loop:
-    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type"
-      value: "'nothing'"
-    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type"
-      value: "'nothing'"
-    - key: "/org/gnome/desktop/screensaver/lock-enabled"
-      value: "false"
-##################################################
-# Keybindinds
-##################################################
-
-# Shell keybindings
-
 # - name: Unset shell keybindigs 
 #   community.general.dconf:
 #     key: "/org/gnome/shell/keybindings/{{ item | string }}"
@@ -228,4 +170,3 @@
     value: |
       ['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
     state: present
-

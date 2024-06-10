@@ -1,0 +1,8 @@
+- name: Install misc Gnome extensions
+  ansible.builtin.include_tasks: helpers/enable-extension.yml
+  vars:
+    extension: "{{ item }}"
+  loop:
+    - appindicatorsupport@rgcjonas.gmail.com
+    - launch-new-instance@gnome-shell-extensions.gcampax.github.com
+

@@ -1,0 +1,39 @@
+- name: Import packages tasks
+  ansible.builtin.import_tasks: packages.yml
+  tags: packages
+
+- name: Import codecs tasks
+  ansible.builtin.import_tasks: codecs.yml
+  tags: codecs
+
+- name: Import Nvidia tasks
+  ansible.builtin.import_tasks: nvidia.yml
+  tags: nvidia
+
+- name: Import rEFInd tasks
+  ansible.builtin.import_tasks: refind.yml
+  tags: refind
+
+- name: Import Flatpak tasks
+  ansible.builtin.import_tasks: flatpak.yml
+  tags: flatpak
+
+- name: Import Google Chrome tasks
+  ansible.builtin.import_tasks: chrome.yml
+  tags: chrome
+
+- name: Import 1Password tasks
+  ansible.builtin.import_tasks: onepassword.yml
+  tags: onepassword
+
+- name: Import Neovim tasks
+  ansible.builtin.import_tasks: neovim.yml
+  tags: neovim
+
+- name: Import Jetbrains tasks
+  ansible.builtin.import_tasks: jetbrains.yml
+  tags: jetbrains
+
+- name: Import Docker tasks
+  ansible.builtin.import_tasks: docker.yml
+  tags: docker

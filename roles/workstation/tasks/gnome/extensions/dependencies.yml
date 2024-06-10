@@ -1,0 +1,14 @@
+- name: Install Gnome extensions manager
+  ansible.builtin.dnf:
+    name:
+      - gnome-extensions-app
+    state: present
+  become: true
+
+- name: Install gnome-extensions-cli
+  ansible.builtin.pip:
+    name: gnome-extensions-cli
+    extra_args: --upgrade
+    executable: pip3
+  become: true
+  become_user: "{{ user.name }}"

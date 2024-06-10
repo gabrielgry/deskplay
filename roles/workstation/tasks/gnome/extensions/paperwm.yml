@@ -1,9 +1,7 @@
-- name: install Paperwm extension
-  ansible.builtin.include_role:
-    name: common
-    tasks_from: enable-gnome-extension
+- name: Install Paperwm extension
+  ansible.builtin.include_tasks: helpers/enable-extension.yml
   vars:
-    extension_id: paperwm@paperwm.github.com
+    extension: paperwm@paperwm.github.com
 
 - name: Set Paperwm settings 
   community.general.dconf:

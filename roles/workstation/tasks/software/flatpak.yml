@@ -3,6 +3,8 @@
     name: flathub
     state: present
     flatpakrepo_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+  become: true
+  become_user: "{{ user.name }}"
 
 - name: Install Flatpak packages
   community.general.flatpak:
@@ -12,7 +14,10 @@
       - org.qbittorrent.qBittorrent
       - io.httpie.Httpie
       - org.videolan.VLC
+      - com.github.xournalpp.xournalpp
     state: present
+  become: true
+  become_user: "{{ user.name }}"
 
 - name: Remove Flatpak packages
   community.general.flatpak:
@@ -20,5 +25,7 @@
       - com.usebruno.Bruno
       - de.haeckerfelix.Fragments
     state: absent
+  become: true
+  become_user: "{{ user.name }}"
 
 

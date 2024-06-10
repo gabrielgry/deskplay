@@ -1,0 +1,4 @@
+- ansible.builtin.import_tasks: dependencies.yml
+- ansible.builtin.import_tasks: misc-extensions.yml
+- ansible.builtin.import_tasks: bing-wallpaper.yml
+# - ansible.builtin.import_tasks: paperwm.yml
