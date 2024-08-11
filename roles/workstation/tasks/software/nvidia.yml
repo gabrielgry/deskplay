@@ -15,3 +15,12 @@
   loop:
     - "nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1"
   become: true
+
+- name: Use Nvidia open kernel modules
+  ansible.builtin.command: |
+    sh -c 'echo "%_with_kmod_nvidia_open 1" > /etc/rpm/macros.nvidia-kmod'
+  become: true
+
+- name: Rebuild akmods
+  ansible.builtin.command: akmods --kernels $(uname -r) --rebuild
+  become: true
