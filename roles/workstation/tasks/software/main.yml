@@ -34,6 +34,10 @@
   ansible.builtin.import_tasks: jetbrains.yml
   tags: jetbrains
 
+- name: Import VSCode tasks
+  ansible.builtin.import_tasks: vscode.yml
+  tags: vscode
+
 - name: Import Docker tasks
   ansible.builtin.import_tasks: docker.yml
   tags: docker
