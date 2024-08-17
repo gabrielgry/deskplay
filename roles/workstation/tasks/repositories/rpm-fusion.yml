@@ -30,7 +30,7 @@
 - name: Ensure RPM Fusion packages are enabled
   ansible.builtin.yum_repository:
     name: "{{ item }}"
-    state: present
+    enabled: true
   with_items:
     - rpmfusion-free
     - rmpfusion-free-updates
