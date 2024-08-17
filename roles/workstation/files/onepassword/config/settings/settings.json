@@ -1,9 +1,12 @@
 {
   "version": 1,
-  "sshAgent.sshAuthorizatonModel": "application",
-  "developers.cliSharedLockState.enabled": true,
   "app.useHardwareAcceleration": true,
   "app.theme": "dark",
+  "browsers.extension.enabled": true,
+  "security.autolock.minutes": 60,
+  "security.authenticatedUnlock.enabled": true,
+  "sshAgent.storeKeyTitles": true,
+  "sshAgent.storeSshKeyTitlesResponseGiven": true,
   "sshAgent.enabled": true,
-  "security.authenticatedUnlock.enabled": true
+  "developers.cliSharedLockState.enabled": true
 }
