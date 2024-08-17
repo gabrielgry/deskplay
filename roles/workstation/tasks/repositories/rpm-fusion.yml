@@ -17,7 +17,7 @@
   become: true
 
 - name: Remove rawhide repository if not necessary
-  ansible.builtin.dnf_config_manager:
+  community.general.dnf_config_manager:
     name: "{{ item }}"
     state: disabled
   with_items:
