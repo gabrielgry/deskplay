@@ -4,7 +4,7 @@
     value: "'JetBrainsMono Nerd Font 10'"
     state: present
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
 
 - name: Set dark color scheme
   community.general.dconf:
@@ -12,7 +12,7 @@
     value: "'prefer-dark'"
     state: present
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
 
 - name: Set volume step
   community.general.dconf:
@@ -20,7 +20,7 @@
     value: "2"
     state: present
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
 
 - name: Disable dynamic workspace
   community.general.dconf:
@@ -28,7 +28,7 @@
     value: false 
     state: present
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
 
 - name: Set number of workspaces
   community.general.dconf:
@@ -36,7 +36,7 @@
     value: "10" 
     state: present
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
 
 - name: Set number of workspaces
   community.general.dconf:
@@ -44,7 +44,7 @@
     value: "true" 
     state: present
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
 
 - name: Set power settings 
   community.general.dconf:
@@ -59,4 +59,4 @@
     - key: "/org/gnome/desktop/screensaver/lock-enabled"
       value: "false"
   become: true
-  become_user: "{{ user.name }:}"
+  become_user: "{{ user.name }}"
