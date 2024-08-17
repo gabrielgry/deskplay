@@ -17,11 +17,14 @@
   become: true
 
 - name: Remove rawhide repository if not necessary
-  community.general.dnf_config_manager:
+  ansible.builtin.yum_repository:
     name: "{{ item }}"
-    state: disabled
+    state: absent
   with_items:
     - rpmfusion-free-rawhide
+    - rmpfusion-free-rawhide-debuginfo
+    - rpmfusion-free-rawhide-source
+  when: "ansible_facts.distribution_major_version != 'rawhide'"
   become: true
 
 - name: Ensure RPM Fusion repositories are enabled
