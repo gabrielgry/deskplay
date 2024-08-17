@@ -14,7 +14,6 @@
   with_items:
     - "free"
     - "nonfree"
-  when: "'rpmfusion-free-release' not in ansible_facts.packages"
   become: true
 
 - name: Remove rawhide repository if not necessary
