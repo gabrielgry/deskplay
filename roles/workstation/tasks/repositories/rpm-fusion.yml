@@ -27,10 +27,10 @@
   when: "ansible_facts.distribution_major_version != 'rawhide'"
   become: true
 
-- name: Ensure RPM Fusion packages are enabled
-  ansible.builtin.yum_repository:
+- name: Ensure RPM Fusion repositories are enabled
+  community.general.dnf_config_manager:
     name: "{{ item }}"
-    enabled: true
+    state: enabled
   with_items:
     - rpmfusion-free
     - rmpfusion-free-updates
