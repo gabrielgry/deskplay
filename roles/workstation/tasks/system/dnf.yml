@@ -3,7 +3,7 @@
     path: /etc/dnf/dnf.conf
     section: main
     option: max_parallel_downloads
-    value: 10
+    value: 20
     no_extra_spaces: true
     owner: "root"
     group: "root"
