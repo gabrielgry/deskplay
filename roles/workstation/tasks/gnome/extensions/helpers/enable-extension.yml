@@ -1,17 +1,4 @@
-- name: Get enabled extensions
-  community.general.dconf:
-    key: /org/gnome/shell/enabled-extensions
-    state: read
-  register: r_enabled_gnome_extensions
-  become: true
-  become_user: "{{ user.name }}"
-
 - name: Install {{ extension }} extension
   ansible.builtin.command: "gext --filesystem install {{ extension }}"
-  register: r_gext
   become: true
   become_user: "{{ user.name }}"
-  when: "extension not in r_enabled_gnome_extensions.value"
-  failed_when: 'already installed' not in r_gext.stdout or (
-                  'Enable' not in r_gext.stdout
-                  extension not in r_gext.stdout) 
