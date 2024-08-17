@@ -37,7 +37,6 @@
     - rmpfusion-free-updates
     - rpmfusion-nonfree
     - rpmfusion-nonfree-updates
-  when: "ansible_facts.distribution_major_version is not 'rawhide'"
   become: true
 
 - name: Update system packages
