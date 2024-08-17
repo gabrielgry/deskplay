@@ -22,8 +22,8 @@
     state: absent
   with_items:
     - rpmfusion-free-rawhide
-    - rmpfusion-free-debuginfo
-    - rpmfusion-free-source
+    - rmpfusion-free-rawhide-debuginfo
+    - rpmfusion-free-rawhide-source
   when: "ansible_facts.distribution_major_version != 'rawhide'"
   become: true
 
