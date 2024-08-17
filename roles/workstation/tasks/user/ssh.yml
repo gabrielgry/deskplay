@@ -5,3 +5,5 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "u=rw"
+  become: true
+  become_user: "{{ user.name }}"

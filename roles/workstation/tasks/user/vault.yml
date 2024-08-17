@@ -5,6 +5,8 @@
     group: "{{ user.name }}"
     state: directory
     mode: "u=rwx,g=rx,o=rx"
+  become: true
+  become_user: "{{ user.name }}"
 
 - name: Create Vault folders
   ansible.builtin.file:
@@ -21,6 +23,7 @@
       - Media
       - Resources
   become: true
+  become_user: "{{ user.name }}"
 
 - name: Create Vault media folders
   ansible.builtin.file:
@@ -37,6 +40,7 @@
       - Music
       - Series
   become: true
+  become_user: "{{ user.name }}"
 
 - name: Ensure gtk3 config folder exists
   ansible.builtin.file:
@@ -46,6 +50,7 @@
     group: "{{ user.name }}"
     mode: "u=rwx,g=rx,o=rx"
   become: true
+  become_user: "{{ user.name }}"
 
 - name: Template vault bookmarks
   ansible.builtin.template:
@@ -55,3 +60,5 @@
     group: "{{ user.name }}"
     mode: "u=rw,g=r,o=r"
   become: true
+  become_user: "{{ user.name }}"
+
