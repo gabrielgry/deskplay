@@ -16,3 +16,33 @@
     - "nonfree"
   when: "'rpmfusion-free-release' not in ansible_facts.packages"
   become: true
+
+- name: Remove rawhide repository if not necessary
+  ansible.builtin.yum_repository:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - rpmfusion-free-rawhide
+    - rmpfusion-free-debuginfo
+    - rpmfusion-free-source
+  when: "ansible_facts.distribution_major_version is not 'rawhide'"
+  become: true
+
+- name: Ensure RPM Fusion packages are enabled
+  ansible.builtin.yum_repository:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - rpmfusion-free
+    - rmpfusion-free-updates
+    - rpmfusion-nonfree
+    - rpmfusion-nonfree-updates
+  when: "ansible_facts.distribution_major_version is not 'rawhide'"
+  become: true
+
+- name: Update system packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: true
+  become: true
