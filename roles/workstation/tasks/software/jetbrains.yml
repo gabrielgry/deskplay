@@ -1,12 +1,15 @@
-- name: Get release info
+- name: Get Jetbrains Toolbox release info
   ansible.builtin.uri:
     url: "https://data.services.jetbrains.com/products/releases?code=TBA&latest=true&type=release"
     return_content: true
   register: r_jetbrains_toolbox_info
 
-- name: Create temporary directory
+- name: Create temporary directory for JetBrains Toolbox
   ansible.builtin.file:
     path: /tmp/jetbrains_toolbox
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "u=rwx,g=rx,o=rx"
     state: directory
 
 - name: Download JetBrains Toolbox file
@@ -15,19 +18,22 @@
     dest: /tmp/jetbrains_toolbox/jetbrains_toolbox.tar.gz
     checksum: "sha256:{{ r_jetbrains_toolbox_info.json.TBA[0].downloads.linux.checksumLink }}"
 
-- name: Extract AppImage
+- name: Extract JetBrains Toolbox AppImage
   ansible.builtin.unarchive:
     src: /tmp/jetbrains_toolbox/jetbrains_toolbox.tar.gz
     dest: /tmp/jetbrains_toolbox
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "u=rwx"
     remote_src: true
     list_files: true
+  register: r_jetbrains_toolbox_files
 
 - name: Run JetBrains Toolbox
   ansible.builtin.shell: "/tmp/jetbrains_toolbox/{{r_jetbrains_toolbox_files.files[1]}}"
-  become: true
-  become_user: "{{ user.name }}"
+  register: r_jetbrains_toolbox_run
 
-- name: Delete temporary directory
+- name: Delete JetBrains Toolbox temporary directory
   ansible.builtin.file:
     path: /tmp/jetbrains_toolbox
     state: absent
