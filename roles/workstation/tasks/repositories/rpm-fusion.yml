@@ -25,7 +25,7 @@
     - rpmfusion-free-rawhide
     - rmpfusion-free-debuginfo
     - rpmfusion-free-source
-  when: "ansible_facts.distribution_major_version is not 'rawhide'"
+  when: "ansible_facts.distribution_major_version != 'rawhide'"
   become: true
 
 - name: Ensure RPM Fusion packages are enabled
