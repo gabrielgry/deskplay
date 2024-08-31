@@ -12,10 +12,8 @@
       - com.spotify.Client
       - ca.desrt.dconf-editor
       - org.qbittorrent.qBittorrent
-      - io.httpie.Httpie
       - org.videolan.VLC
       - com.github.xournalpp.xournalpp
-      - com.github.johnfactotum.Foliate
       - com.obsproject.Studio
     state: present
   become: true
@@ -26,6 +24,8 @@
     name:
       - com.usebruno.Bruno
       - de.haeckerfelix.Fragments
+      - io.httpie.Httpie
+      - com.github.johnfactotum.Foliate
     state: absent
   become: true
   become_user: "{{ user.name }}"
