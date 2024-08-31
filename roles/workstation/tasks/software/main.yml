@@ -38,6 +38,6 @@
   ansible.builtin.import_tasks: vscode.yml
   tags: vscode
 
-- name: Import Docker tasks
-  ansible.builtin.import_tasks: docker.yml
-  tags: docker
+# - name: Import Docker tasks
+#   ansible.builtin.import_tasks: docker.yml
+#   tags: docker
