@@ -9,9 +9,13 @@
       - vulkan
     state: present
   become: true
-
-- name: Add Kernel parameters for Nvidia driver
-  ansible.builtin.command: 'grubby --args="{{ item }}" --update-kernel=ALL'
-  loop:
-    - "nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1"
+  
+- name: Copy Nvidia driver configuration file
+  ansible.builtin.copy:
+    src: nvidia/nvidia.conf
+    dest: "/etc/modprobe.d/"
+    owner: "root"
+    group: "root"
+    mode: "u=rw,g=r,o=r"
+    directory_mode: "u=rwx,g=rx,o=rx"
   become: true
