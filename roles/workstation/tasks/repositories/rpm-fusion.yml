@@ -34,6 +34,7 @@
   with_items:
     - rpmfusion-free
     - rpmfusion-nonfree
+    - fedora-cisco-openh264
   become: true
 
 - name: Update system packages
