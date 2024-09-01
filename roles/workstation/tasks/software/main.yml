@@ -30,9 +30,9 @@
   ansible.builtin.import_tasks: neovim.yml
   tags: neovim
 
-#- name: Import Jetbrains tasks
-#  ansible.builtin.import_tasks: jetbrains.yml
-#  tags: jetbrains
+- name: Import Jetbrains tasks
+  ansible.builtin.import_tasks: jetbrains.yml
+  tags: jetbrains
 
 - name: Import VSCode tasks
   ansible.builtin.import_tasks: vscode.yml
