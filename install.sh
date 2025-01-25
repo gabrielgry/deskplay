@@ -1,5 +1,11 @@
-set -e
+#!/bin/bash
+set -euo pipefail
 
-git clone https://github.com/gabrielgry/deskplay.git ~/.local/share/deskplay
+rm -rf ~/.local/share/deskplay
 
-ln -S ~/.local/share/deskplay/deskplay.sh ~/.local/bin/deskplay.sh
+mkdir ~/.local/share/deskplay
+cp -r ./* ~/.local/share/deskplay/
+# git clone https://github.com/gabrielgry/deskplay.git ~/.local/share/deskplay
+
+install -d ~/.local/bin
+ln -sf ~/.local/share/deskplay/deskplay.sh ~/.local/bin/deskplay
