@@ -7,7 +7,8 @@ sudo sed -i '/\[rpmfusion-nonfree-nvidia-driver\]/,/^$/s/^enabled=0/enabled=1/' 
 sudo rpm-ostree install -y --idempotent \
   akmod-nvidia \
   xorg-x11-drv-nvidia \
-  xorg-x11-drv-nvidia-cuda
+  xorg-x11-drv-nvidia-cuda \
+  libva-nvidia-driver
 
 sudo rpm-ostree kargs \
   --append-if-missing=rd.driver.blacklist=nouveau \
