@@ -19,8 +19,8 @@ deskplay_pre_setup() {
 
 # Define the deskplay CLI functions
 deskplay_run() {
-  # echo "Running DNF repositories tasks..."
-  # for installer in ~/.local/share/deskplay/tasks/repos/*.sh; do source "$installer"; done
+  echo "Running DNF repositories tasks..."
+  for installer in ~/.local/share/deskplay/tasks/repos/*.sh; do source "$installer"; done
   echo "Running system tasks..."
   for installer in ~/.local/share/deskplay/tasks/system/*.sh; do source "$installer"; done
   echo "Running layers tasks..."
