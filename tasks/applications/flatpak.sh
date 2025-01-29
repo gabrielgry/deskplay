@@ -15,6 +15,7 @@ flatpaks_to_remove=(
   "org.gnome.Contacts"
   "org.gnome.Maps"
   "org.gnome.clocks"
+  "org.gnome.Showtime"
 )
 
 for app in "${flatpaks_to_remove[@]}"; do
@@ -37,9 +38,9 @@ flatpaks_to_install=(
   "com.spotify.Client"
   "ca.desrt.dconf-editor"
   "org.qbittorrent.qBittorrent"
-  "org.gnome.Showtime"
   "com.github.xournalpp.xournalpp"
   "org.gnome.Extensions"
+  "org.videolan.VLC"
 )
 
 for app in "${flatpaks_to_install[@]}"; do
